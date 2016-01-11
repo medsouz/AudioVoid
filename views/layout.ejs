@@ -1,0 +1,18 @@
+<% /* If the request is an AJAX request then only return the body. If not then return all of the information */ %>
+<% if (req.xhr || req.headers.accept.indexOf('json') > -1) { %>
+	<%- body %>
+<% } else { %>
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<title><%= title %></title>
+			<script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
+			<script src="/js/nav.js"></script>
+		</head>
+		<body>
+			<main id="content">
+				<%- body %>
+			</main>
+		</body>
+	</html>
+<% } %>
