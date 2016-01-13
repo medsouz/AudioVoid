@@ -3,16 +3,89 @@
 	<%- body %>
 <% } else { %>
 	<!DOCTYPE html>
-	<html>
+	<html lang="en">
 		<head>
-			<title><%= title %></title>
-			<script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
+			<meta charset="utf-8">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<meta name="description" content="AudioVoid: TODO">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<title>AudioVoid</title>
+
+			<!-- Add to homescreen for Chrome on Android -->
+			<meta name="mobile-web-app-capable" content="yes">
+			<link rel="icon" sizes="192x192" href="/img/android-desktop.png">
+
+			<!-- Add to homescreen for Safari on iOS -->
+			<meta name="apple-mobile-web-app-capable" content="yes">
+			<meta name="apple-mobile-web-app-status-bar-style" content="black">
+			<meta name="apple-mobile-web-app-title" content="AudioVoid">
+			<link rel="apple-touch-icon-precomposed" href="/img/ios-desktop.png">
+
+			<!-- Tile icon for Win8 (144x144 + tile color) -->
+			<meta name="msapplication-TileImage" content="/img/touch/ms-touch-icon-144x144-precomposed.png">
+			<meta name="msapplication-TileColor" content="#3372DF">
+
+			<link rel="shortcut icon" href="/img/favicon.png">
+
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+			<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+			<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.css">
+			<link rel="stylesheet" href="/stylesheets/style.css">
+
+			<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+			<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
 			<script src="/js/nav.js"></script>
 		</head>
+
 		<body>
-			<main id="content">
-				<%- body %>
-			</main>
+			<div class="audiovoid-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+				<header class="audiovoid-header mdl-layout__header mdl-color--grey-800 mdl-color-text--grey-100">
+					<div class="mdl-layout__header-row">
+						<span class="mdl-layout-title">Home</span>
+						<div class="mdl-layout-spacer"></div>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+							<label class="mdl-button mdl-js-button mdl-button--icon" for="search">
+								<i class="material-icons">search</i>
+							</label>
+							<div class="mdl-textfield__expandable-holder">
+								<input class="mdl-textfield__input" type="text" id="search">
+								<label class="mdl-textfield__label" for="search">Enter your query...</label>
+							</div>
+						</div>
+
+
+					</div>
+				</header>
+				<div class="audiovoid-drawer mdl-layout__drawer mdl-color--red-900 mdl-color-text--grey-100">
+					<header class="audiovoid-drawer-header">
+						<img src="/img/user.jpg" class="audiovoid-avatar">
+						<div class="audiovoid-avatar-dropdown">
+							<span>hello@example.com</span>
+							<div class="mdl-layout-spacer"></div>
+							<button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+								<i class="material-icons" role="presentation">arrow_drop_down</i>
+								<span class="visuallyhidden">Accounts</span>
+							</button>
+							<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
+								<li class="mdl-menu__item">Settings</li>
+								<li class="mdl-menu__item">Sign Out</li>
+							</ul>
+						</div>
+					</header>
+					<nav class="audiovoid-navigation mdl-navigation mdl-color--grey-800">
+						<a class="mdl-navigation__link mdl-color-text--grey-100" href=""><i class="mdl-color-text--grey-400 material-icons" role="presentation">home</i>Home</a>
+						<a class="mdl-navigation__link mdl-color-text--grey-100" href=""><i class="mdl-color-text--grey-400 material-icons" role="presentation">account_circle</i>Profile</a>
+						<a class="mdl-navigation__link mdl-color-text--grey-100" href=""><i class="mdl-color-text--grey-400 material-icons" role="presentation">email</i>Inbox</a>
+						<a class="mdl-navigation__link mdl-color-text--grey-100" href=""><i class="mdl-color-text--grey-400 material-icons" role="presentation">people</i>Followers</a>
+						<a class="mdl-navigation__link mdl-color-text--grey-100" href=""><i class="mdl-color-text--grey-400 material-icons" role="presentation">people_outline</i>Following</a>
+					</nav>
+				</div>
+				<main id="content" class="mdl-layout__content mdl-color--grey-900">
+					<%- body %>
+				</main>
+			</div>
+			<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
 		</body>
 	</html>
+
 <% } %>
