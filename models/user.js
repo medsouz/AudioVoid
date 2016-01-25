@@ -3,8 +3,6 @@ module.exports = function(sequelize, DataTypes) {
 		id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
 		username: DataTypes.STRING(20),
 		email: DataTypes.STRING(255),
-		password: DataTypes.STRING(512),
-		registerDate: DataTypes.DATE,
-		lastLogonDate: DataTypes.DATE
+		password: DataTypes.STRING(512)
 	});
 }
