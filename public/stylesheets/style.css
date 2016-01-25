@@ -1,70 +1,84 @@
 /* Based off the the Material Design Lite dashboard template: http://www.getmdl.io/templates/dashboard/index.html */
 
 html, body {
-  font-family: 'Roboto', 'Helvetica', sans-serif;
+	font-family: 'Roboto', 'Helvetica', sans-serif;
 }
 .audiovoid-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 24px;
+	width: 48px;
+	height: 48px;
+	border-radius: 24px;
 }
 .audiovoid-layout .audiovoid-header .mdl-textfield {
-  padding: 0px;
-  margin-top: 41px;
+	padding: 0px;
+	margin-top: 41px;
 }
 .audiovoid-layout .audiovoid-header .mdl-textfield .mdl-textfield__expandable-holder {
-  bottom: 19px;
+	bottom: 19px;
 }
 .mdl-layout__drawer .avatar {
-  margin-bottom: 16px;
+	margin-bottom: 16px;
 }
 .audiovoid-drawer {
-  border: none;
+	border: none;
 }
 /* iOS Safari specific workaround */
 .audiovoid-drawer .mdl-menu__container {
-  z-index: -1;
+	z-index: -1;
 }
 .audiovoid-drawer .audiovoid-navigation {
-  z-index: -2;
+	z-index: -2;
 }
 /* END iOS Safari specific workaround */
 .audiovoid-drawer .mdl-menu .mdl-menu__item {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 .audiovoid-drawer-header {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 16px;
-  height: 151px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	padding: 16px;
+	height: 151px;
 }
 .audiovoid-avatar-dropdown {
-  display: flex;
-  position: relative;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
+	display: flex;
+	position: relative;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
 }
 
 .audiovoid-navigation {
-  flex-grow: 1;
+	flex-grow: 1;
 }
 .audiovoid-layout .audiovoid-navigation .mdl-navigation__link {
-  display: flex !important;
-  flex-direction: row;
-  align-items: center;
-  color: rgba(255, 255, 255, 0.56);
-  font-weight: 500;
+	display: flex !important;
+	flex-direction: row;
+	align-items: center;
+	color: rgba(255, 255, 255, 0.56);
+	font-weight: 500;
 }
 .audiovoid-layout .audiovoid-navigation .mdl-navigation__link:hover {
-  background-color: #00BCD4;
-  color: #37474F;
+	background-color: #00BCD4;
+	color: #37474F;
 }
 .audiovoid-navigation .mdl-navigation__link .material-icons {
-  font-size: 24px;
-  color: rgba(255, 255, 255, 0.56);
-  margin-right: 32px;
+	font-size: 24px;
+	color: rgba(255, 255, 255, 0.56);
+	margin-right: 32px;
+}
+.center {
+	margin-left: auto;
+	margin-right: auto;
+	display: table;
+}
+
+.titleIcon {
+	font-size: 100px;
+}
+
+.scroll {
+	overflow-y: auto;
+	overflow-wrap: break-word;
 }
