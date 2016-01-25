@@ -5,9 +5,29 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session')
+var passport = require('passport');
 
 var routes = require('./routes/index');
 var user = require('./routes/user');
+var login = require('./routes/login');
+
+// Create global database definitions
+var Sequelize = require("sequelize");
+//TODO: Move authentication stuff to a config file
+var sequelize = new Sequelize('AudioVoid', 'username', 'password', {
+	host: 'localhost',
+	dialect: 'sqlite',
+	pool: {
+		max: 5,
+		min: 0,
+		idle: 10000
+	},
+	// SQLite only
+	storage: 'db.sqlite'
+});
+GLOBAL.User = sequelize.import(__dirname + "/models/user.js");
+sequelize.sync();
 
 var app = express();
 
@@ -23,9 +43,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+//TODO: Do something more secure with this
+app.use(session({
+	resave: false,
+	saveUninitialized: false,
+	secret: 'totally secure text string. no session hijacking here. nope. no way.'
+}));
+
+// Add Passport authentication to express
+// Passport login strategies are setup in ./routes/login.js
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', routes);
 app.use('/user', user);
+app.use('/login', login);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
