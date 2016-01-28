@@ -1,38 +1,47 @@
 <% layout('layout') -%>
-<h1>Login</h1>
-<form action="/login" method="post">
-	<div>
-		<label>Username:</label>
-		<input type="text" name="username"/>
+<div class="mdl-grid">
+	<div class="mdl-cell mdl-cell--6-col mdl-color--white mdl-color-text--black">
+		<h2 style="padding:10px">Login</h2>
+		<form action="/login" method="post">
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+				<input class="mdl-textfield__input" type="text" name="username">
+				<label class="mdl-textfield__label" for="sample3">Username:</label>
+			</div>
+			<div>
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input class="mdl-textfield__input" type="password" name="password">
+					<label class="mdl-textfield__label" for="sample3">Password</label>
+				</div>
+				<div style="padding: 10px">
+					<button class="mdl-button mdl-js-button mdl-js-ripple-effect button buttonhover"type="submit" value="Log In">Log in</button>
+				</div>
+			</div>
+		</form>
 	</div>
-	<div>
-		<label>Password:</label>
-		<input type="password" name="password"/>
+	<div class="mdl-cell mdl-cell--6-col mdl-color--white mdl-color-text--black">
+		<h2>Register</h2>
+		<form action="/login/register" method="post">
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input class="mdl-textfield__input" type="text" name="username">
+				<label class="mdl-textfield__label" for="sample3">Username:</label>
+			</div>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input class="mdl-textfield__input" type="text" name="email">
+				<label class="mdl-textfield__label" for="sample3">Email:</label>
+			</div>
+			<div>
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input class="mdl-textfield__input" type="password" name="password">
+					<label class="mdl-textfield__label" for="sample3">Password:</label>
+				</div>
+			</div>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input class="mdl-textfield__input" type="password" name="confirmPassword">
+				<label class="mdl-textfield__label" for="sample3">Confirm password:</label>
+			</div>
+			<div style="padding: 10px">
+				<button class="mdl-button mdl-js-button mdl-js-ripple-effect" type="submit" value="Register">Register</button>
+			</div>
+		</form>
 	</div>
-	<div>
-		<input type="submit" value="Log In"/>
-	</div>
-</form>
-
-<h1>Register</h1>
-<form action="/login/register" method="post">
-	<div>
-		<label>Username:</label>
-		<input type="text" name="username"/>
-	</div>
-	<div>
-		<label>Email:</label>
-		<input type="text" name="email"/>
-	</div>
-	<div>
-		<label>Password:</label>
-		<input type="password" name="password"/>
-	</div>
-	<div>
-		<label>Confirm Password:</label>
-		<input type="password" name="confirmPassword"/>
-	</div>
-	<div>
-		<input type="submit" value="Register"/>
-	</div>
-</form>
+</div>
