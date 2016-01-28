@@ -1,6 +1,13 @@
 <% /* If the request is an AJAX request then only return the body. If not then return all of the information */ %>
 <% if (req.xhr || req.headers.accept.indexOf('json') > -1) { %>
 	<%- body %>
+	<script>
+		// If the main content div is missing then force the page to reload
+		window.onload = function (){
+			if(!document.getElementById("#content"))
+				location.reload();
+		}
+	</script>
 <% } else { %>
 	<!DOCTYPE html>
 	<html lang="en">
@@ -52,32 +59,41 @@
 								<label class="mdl-textfield__label" for="search">Enter your query...</label>
 							</div>
 						</div>
-
-
 					</div>
 				</header>
 				<div class="audiovoid-drawer mdl-layout__drawer mdl-color--red-900 mdl-color-text--grey-100">
 					<header class="audiovoid-drawer-header">
-						<img src="/img/user.jpg" class="audiovoid-avatar">
-						<div class="audiovoid-avatar-dropdown">
-							<span>hello@example.com</span>
-							<div class="mdl-layout-spacer"></div>
-							<button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-								<i class="material-icons" role="presentation">arrow_drop_down</i>
-								<span class="visuallyhidden">Accounts</span>
-							</button>
-							<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
-								<li class="mdl-menu__item">Settings</li>
-								<li class="mdl-menu__item">Sign Out</li>
-							</ul>
-						</div>
+						<b>AudioVoid</b>
+						<div class="mdl-card--expand"></div>
+						<% if (req.user) { %>
+							<img src="/img/user.jpg" class="audiovoid-avatar">
+							<div class="audiovoid-avatar-dropdown">
+								<span><%= req.user.username %></span>
+								<div class="mdl-layout-spacer"></div>
+								<button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+									<i class="material-icons" role="presentation">arrow_drop_down</i>
+									<span class="visuallyhidden">Accounts</span>
+								</button>
+								<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
+									<a class="mdl-menu__item" href="/settings">Settings</a>
+									<a class="mdl-menu__item" href="/login/logout" noajax>Sign Out</a>
+								</ul>
+							</div>
+						<% } else { %>
+							<div>
+								<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--grey-100" href="/login">Login</a>
+								<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--grey-100">Register</a>
+							</div>
+						<% } %>
 					</header>
 					<nav class="audiovoid-navigation mdl-navigation mdl-color--grey-800">
-						<a class="mdl-navigation__link mdl-color-text--grey-100" href=""><i class="mdl-color-text--grey-400 material-icons" role="presentation">home</i>Home</a>
-						<a class="mdl-navigation__link mdl-color-text--grey-100" href=""><i class="mdl-color-text--grey-400 material-icons" role="presentation">account_circle</i>Profile</a>
-						<a class="mdl-navigation__link mdl-color-text--grey-100" href=""><i class="mdl-color-text--grey-400 material-icons" role="presentation">email</i>Inbox</a>
-						<a class="mdl-navigation__link mdl-color-text--grey-100" href=""><i class="mdl-color-text--grey-400 material-icons" role="presentation">people</i>Followers</a>
-						<a class="mdl-navigation__link mdl-color-text--grey-100" href=""><i class="mdl-color-text--grey-400 material-icons" role="presentation">people_outline</i>Following</a>
+						<a class="mdl-navigation__link mdl-color-text--grey-100" href="/"><i class="mdl-color-text--grey-400 material-icons" role="presentation">home</i>Home</a>
+						<% if (req.user) { %>
+							<a class="mdl-navigation__link mdl-color-text--grey-100" href="/user"><i class="mdl-color-text--grey-400 material-icons" role="presentation">account_circle</i>Profile</a>
+							<a class="mdl-navigation__link mdl-color-text--grey-100" href=""><i class="mdl-color-text--grey-400 material-icons" role="presentation">email</i>Inbox</a>
+							<a class="mdl-navigation__link mdl-color-text--grey-100" href=""><i class="mdl-color-text--grey-400 material-icons" role="presentation">people</i>Followers</a>
+							<a class="mdl-navigation__link mdl-color-text--grey-100" href=""><i class="mdl-color-text--grey-400 material-icons" role="presentation">people_outline</i>Following</a>
+						<% } %>
 					</nav>
 				</div>
 				<main id="content" class="mdl-layout__content mdl-color--grey-900">
