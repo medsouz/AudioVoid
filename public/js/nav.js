@@ -9,16 +9,19 @@ function setContentURL(url) {
 		success: function(data) {
 			console.log("Switching to " + url);
 			$("#content").html(data);
+			componentHandler.upgradeElements($("#content")[0]);
 		}
 	});
 }
 
 $(document).ready(function(){
 	$(document).on('click', "a[href^='/']", function(e) {
-		url = $(this).attr('href');
-		history.pushState(null, null, url);
-		setContentURL(url);
-		e.preventDefault();
+		if(!$(this)[0].hasAttribute("noajax")) {
+			url = $(this).attr('href');
+			history.pushState(null, null, url);
+			setContentURL(url);
+			e.preventDefault();
+		}
 	});
 })
 
