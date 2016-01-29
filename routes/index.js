@@ -3,7 +3,10 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	res.render('index', { req : req, title: 'AudioVoid' });
+	if(req.user)
+		res.render('dashboard', { req : req, title: 'AudioVoid' });
+	else
+		res.render('index', { req : req, title: 'AudioVoid' });
 });
 
 module.exports = router;
