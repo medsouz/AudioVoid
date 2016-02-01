@@ -14,8 +14,8 @@ router.get('/', function(req, res, next) {
 router.get('/:username', function(req, res, next) {
 	var username = req.params.username;
 	// If the user is viewing their own profile then save us a SQL request
-	if(username == req.user.username) {
-		res.render('user', { req : req, user: req.user, title: username + "'s Profile" });
+	if(req.user && username == req.user.username) {
+		res.render('user', { req : req, user: req.user, title: req.user.username + "'s Profile" });
 	} else {
 		User.findOne({
 			where: {
@@ -23,7 +23,7 @@ router.get('/:username', function(req, res, next) {
 			}
 		}).then(function(user, err) {
 			if(user != null) {
-				res.render('user', { req : req, user: user, title: username + "'s Profile" });
+				res.render('user', { req : req, user: user, title: user.username + "'s Profile" });
 			} else {
 				res.redirect('/');
 			}
