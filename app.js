@@ -10,7 +10,7 @@ var passport = require('passport');
 
 var routes = require('./routes/index');
 var user = require('./routes/user');
-var login = require('./routes/login');
+var auth = require('./routes/auth');
 
 // Create global database definitions
 var Sequelize = require("sequelize");
@@ -55,9 +55,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// routing
 app.use('/', routes);
 app.use('/user', user);
-app.use('/login', login);
+app.use('/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

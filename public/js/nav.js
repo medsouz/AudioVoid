@@ -6,8 +6,17 @@
 function setContentURL(url, addToHistory) {
 	$.ajax({
 		url: url,
-		success: function(data) {
-			console.log("Switching to " + url);
+		success: function(data, status, req) {
+			//Get actual URL from the server. Prevents the wrong URL from showing if there is a redirect.
+			var actualURL = req.getResponseHeader("Ajax-Nav-URL");
+			if(actualURL)
+				url = actualURL;
+
+			var title = req.getResponseHeader("Ajax-Nav-Title");
+			if(title) {
+				document.title = "AudioVoid - " + title;
+				$("#title").text(title);
+			}
 
 			if(addToHistory)
 				history.pushState(null, null, url);
