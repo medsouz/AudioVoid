@@ -1,5 +1,12 @@
 <% /* If the request is an AJAX request then only return the body. If not then return all of the information */ %>
 <% if (req.xhr || req.headers.accept.indexOf('json') > -1) { %>
+	<%
+		// If the request is an AJAX request then store the URL in the header.
+		// Fixes an issue where the client will display the wrong URL if redirected.
+		req.res.setHeader("Ajax-Nav-URL", req.url);
+		// Tell the client the page title
+		req.res.setHeader("Ajax-Nav-Title", title);
+	%>
 	<%- body %>
 	<script>
 		// If the main content div is missing then force the page to reload
@@ -16,7 +23,7 @@
 			<meta http-equiv="X-UA-Compatible" content="IE=edge">
 			<meta name="description" content="AudioVoid: TODO">
 			<meta name="viewport" content="width=device-width, initial-scale=1">
-			<title>AudioVoid</title>
+			<title>AudioVoid - <%= title %></title>
 
 			<!-- Add to homescreen for Chrome on Android -->
 			<meta name="mobile-web-app-capable" content="yes">
@@ -50,7 +57,7 @@
 			<div class="audiovoid-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 				<header class="audiovoid-header mdl-layout__header mdl-color--grey-800 mdl-color-text--grey-100">
 					<div class="mdl-layout__header-row">
-						<span class="mdl-layout-title">Home</span>
+						<span id="title" class="mdl-layout-title"><%= title %></span>
 						<div class="mdl-layout-spacer"></div>
 						<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
 							<label class="mdl-button mdl-js-button mdl-button--icon" for="search">

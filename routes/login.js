@@ -46,7 +46,7 @@ router.get("/", function(req, res, next) {
 	if(req.user)
 		res.redirect("/");
 	else
-		res.render("login", { req : req, title: 'AudioVoid' });
+		res.render("login", { req : req, title: 'Login / Register' });
 });
 
 router.post("/", passport.authenticate("local", { successRedirect: "/", failureRedirect: "/login" }));

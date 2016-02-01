@@ -55,6 +55,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// routing
 app.use('/', routes);
 app.use('/user', user);
 app.use('/login', login);
