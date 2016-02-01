@@ -3,7 +3,7 @@
 	<%
 		// If the request is an AJAX request then store the URL in the header.
 		// Fixes an issue where the client will display the wrong URL if redirected.
-		req.res.setHeader("Ajax-Nav-URL", req.url);
+		req.res.setHeader("Ajax-Nav-URL", req.originalUrl);
 		// Tell the client the page title
 		req.res.setHeader("Ajax-Nav-Title", title);
 	%>
