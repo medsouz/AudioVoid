@@ -49,7 +49,7 @@ router.get("/", function(req, res, next) {
 		res.render("login", { req : req, title: 'Login / Register' });
 });
 
-router.post("/", passport.authenticate("local", { successRedirect: "/", failureRedirect: "/login" }));
+router.post("/login", passport.authenticate("local", { successRedirect: "/", failureRedirect: "/auth" }));
 
 router.get("/logout", function(req, res, next) {
 	req.logout();
@@ -75,13 +75,13 @@ router.post("/register", function(req, res, next) {
 					password: key
 				}).then(function(user){
 					console.log("Created new user!");
-					res.redirect("/login");
+					res.redirect("/auth");
 				});
 			}
 		});
 	} else {
 		console.log("Invalid username or password");
-		res.redirect("/login");
+		res.redirect("/auth");
 	}
 });
 
