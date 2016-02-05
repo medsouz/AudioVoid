@@ -91,3 +91,8 @@ html, body {
 	padding-top: 0px;
 	text-align: center;
 }
+
+.vertical-flex-parent {
+	display: flex;
+	flex-direction: column;
+}
