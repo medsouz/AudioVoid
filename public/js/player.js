@@ -6,7 +6,7 @@ var songs, audio, audioCtx, gainNode, audioVal, analzyer, source; // audio tag a
 var frequencyArray, bars, barX, barWidth, barHeight, spectrumLocation;
 var songIsPlaying = false; // flag to tell us if the song is currently playing
 var muted = false;
-var songs = ["songs/MarioDrumSet.wav", "songs/YungIrish.wav"]
+var songs = ["/songs/MarioDrumSet.wav", "/songs/YungIrish.wav"]
 var songIndex = 0;
 
 // when the document is ready, run this main function
