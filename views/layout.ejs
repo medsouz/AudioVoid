@@ -106,7 +106,11 @@
 						<div class="mdl-card--expand"></div>
 						<audio id='songs'></audio>
 							<canvas id='cvsVisualizer'></canvas>
+							<span id="trackName">Track Name</span>
+							<div id="songTimer">0</div>
 							<div id='overlay'>
+								<input id='songScrubber' class="mdl-slider mdl-js-slider " type="range"
+								  min="0" max="1000" value="0" tabindex="0">
 								<table>
 									<tr>
 										<td>
@@ -126,12 +130,15 @@
 										</td>
 										<td>
 											<button id='btnNext' class="mdl-button mdl-js-button mdl-button--icon">
-											  <i id='iconNext' class="material-icons">volume_up</i>
+											  <i id='volumeButton' class="material-icons">volume_up</i>
 											</button>
 										</td>
 										<td>
 											<input id='volumeSlider' class="mdl-slider mdl-js-slider " type="range"
 											  min="0" max="100" value="100" tabindex="0">
+										</td>
+										<td>
+
 										</td>
 									</tr>
 								</table>
