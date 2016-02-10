@@ -1,5 +1,8 @@
 #canvas-wrap{ width: 223px; height:64px; position: relative;}
 #cvsVisualizer{width:223px; height:64px; z-index: -1; background-color: #F5F5F5; margin-left:auto;margin-right:auto; display:table;}
+#songScrubber{ z-index: -1;}
+#songTimer{ margin-left: auto; margin-right: auto;}
+#trackName{ margin-left: auto; margin-right: auto;}
 /*
 #overlay{ position: absolute; top:20px; left:10px;}
 */
