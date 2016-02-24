@@ -1,0 +1,53 @@
+<% layout('layout') -%>
+<div class="mdl-grid">
+	<div class="mdl-cell mdl-cell--4-col mdl-color--white mdl-color-text--black login-header" style="margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto; padding-top: 2px; bottom-padding: 0px;">
+		<b>Upload and share your music</b>
+		<br>
+		<div class="mdl-cell mdl-cell--4-col center">
+			<i class="material-icons center" style="font-size: 1000%;">album</i>
+		</div>
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-600" type="SongUpload" value="Upload">Upload Song</button>
+	</div>
+	<div class="mdl-cell mdl-cell--4-col mdl-color--white mdl-color-text--black login-header" style="margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto; padding-top: 2px;">
+		<b>Upload song image</b>
+		<br>
+		<div class="mdl-cell mdl-cell--4-col center">
+			<i class="material-icons center" style="font-size: 1000%;">add_a_photo</i>
+		</div>
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-600" type="SongImageUpload" value="UploadSongImage">Upload Song Image</button>
+	</div>
+	<div class="mdl-cell mdl-cell--4-col mdl-color--white mdl-color-text--black login-header" style="margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto; padding-top: 2px; padding-bottom: 0px;">
+		<b>Song info</b>
+		<div class="mdl-cell mdl-cell--4-col">
+			<form action="#">
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-bottom: 0px;">
+					<input class="mdl-textfield__input" type="text" id="SongTitle">
+					<label class="mdl-textfield__label" for="SongTitle">
+						<b>Title</b>
+					</label>
+				</div>
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"style="padding-bottom: 0px;">
+					<input class="mdl-textfield__input" type="text" id="SongGenre">
+					<label class="mdl-textfield__label" for="SongGenre">
+						<b>Genre</b>
+					</label>
+				</div>
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-bottom: 0px;">
+					<input class="mdl-textfield__input" type="text" id="SongDescription">
+					<label class="mdl-textfield__label" for="SongDescription">
+						<b>Description</b>
+					</label>
+				</div>
+			</form>
+			<table>
+				<div class="mdl-cell mdl-cell--2-col">
+					<tr>
+						<td>
+							<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--grey-600" type="Cancel" value="Cancel">Cancel</button>
+						</td>
+						<td>
+							<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-600" type="Submit" value="Submit">Submit</button>
+						</td>
+					</tr>
+				</div>
+			</div>
