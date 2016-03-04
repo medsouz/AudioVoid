@@ -31,3 +31,6 @@ npm-debug.log
 
 # SQLite database
 *.sqlite
+
+# User uploads
+public/uploads/*
