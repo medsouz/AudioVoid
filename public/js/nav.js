@@ -7,29 +7,33 @@ function setContentURL(url, addToHistory) {
 	$.ajax({
 		url: url,
 		success: function(data, status, req) {
-			//Get actual URL from the server. Prevents the wrong URL from showing if there is a redirect.
-			url = req.getResponseHeader("Ajax-Nav-URL");
-
-			//Make sure the user didn't get logged out somehow without us knowing. If so reload the page.
-			if(req.getResponseHeader("Ajax-Nav-Username") != $("#username").text())
-				window.location = url;
-
-			var title = req.getResponseHeader("Ajax-Nav-Title");
-			document.title = "AudioVoid - " + title;
-			$("#title").text(title);
-
-			if(addToHistory)
-				history.pushState(null, null, url);
-
-			$("#content").html(data);
-			componentHandler.upgradeElements($("#content")[0]);
-			// Hide the navbar if it is currently open
-			if($(".mdl-layout__drawer").hasClass("is-visible"))
-				$(".mdl-layout")[0].MaterialLayout.drawerToggleHandler_();
-			//Scroll to the top of the new page
-			$("#content").scrollTop(0);
+			setContentHTML(req, data, addToHistory);
 		}
 	});
+}
+
+function setContentHTML(req, data, addToHistory) {
+	//Get actual URL from the server. Prevents the wrong URL from showing if there is a redirect.
+	url = req.getResponseHeader("Ajax-Nav-URL");
+
+	//Make sure the user didn't get logged out somehow without us knowing. If so reload the page.
+	if(req.getResponseHeader("Ajax-Nav-Username") != $("#username").text())
+		window.location = url;
+
+	var title = req.getResponseHeader("Ajax-Nav-Title");
+	document.title = "AudioVoid - " + title;
+	$("#title").text(title);
+
+	if(addToHistory)
+		history.pushState(null, null, url);
+
+	$("#content").html(data);
+	componentHandler.upgradeElements($("#content")[0]);
+	// Hide the navbar if it is currently open
+	if($(".mdl-layout__drawer").hasClass("is-visible"))
+		$(".mdl-layout")[0].MaterialLayout.drawerToggleHandler_();
+	//Scroll to the top of the new page
+	$("#content").scrollTop(0);
 }
 
 $(document).ready(function(){
@@ -49,7 +53,7 @@ $(document).ready(function(){
 				url: e.target.action,
 				data: $(e.target).serialize(),
 				success: function(data, status, req) {
-					setContentURL(req.getResponseHeader("Ajax-Nav-URL"), true);
+					setContentHTML(req, data, true);
 				}
 			});
 			e.preventDefault();
