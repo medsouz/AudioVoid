@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session')
 var passport = require('passport');
+var flash = require('connect-flash');
 
 // Global libraries
 // These are functions that are used in many places
@@ -68,6 +69,7 @@ app.use(session({
 // Passport login strategies are setup in ./routes/login.js
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 // routing
 app.use('/', routes);
