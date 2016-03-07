@@ -8,15 +8,15 @@ function setContentURL(url, addToHistory) {
 		url: url,
 		success: function(data, status, req) {
 			//Get actual URL from the server. Prevents the wrong URL from showing if there is a redirect.
-			var actualURL = req.getResponseHeader("Ajax-Nav-URL");
-			if(actualURL)
-				url = actualURL;
+			url = req.getResponseHeader("Ajax-Nav-URL");
+
+			//Make sure the user didn't get logged out somehow without us knowing. If so reload the page.
+			if(req.getResponseHeader("Ajax-Nav-Username") != $("#username").text())
+				window.location = url;
 
 			var title = req.getResponseHeader("Ajax-Nav-Title");
-			if(title) {
-				document.title = "AudioVoid - " + title;
-				$("#title").text(title);
-			}
+			document.title = "AudioVoid - " + title;
+			$("#title").text(title);
 
 			if(addToHistory)
 				history.pushState(null, null, url);
