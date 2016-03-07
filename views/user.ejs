@@ -15,38 +15,34 @@
 						<li class="mdl-menu__item" onclick="$('#profileSettings')[0].showModal();">Edit Profile</li>
 					</ul>
 				<% } %>
-				<b><%= user.username %></b>
+				<b style="font-size: 1.5em"><%= user.username %></b>
 			</div>
 		</div>
 	</div>
 	<div class="mdl-cell mdl-cell--4-col mdl-color--white mdl-color-text--black scroll" style="padding: 15px; padding-top: 0px; height: 300px">
 		<h3 class="center">About Me</h3>
-		<p>
-			Your bones don't break, mine do. That's clear. Your cells react to bacteria and viruses differently than mine. You don't get sick, I do. That's also clear. But for some reason, you and I react the exact same way to water. We swallow it too fast, we choke. We get some in our lungs, we drown. However unreal it may seem, we are connected, you and I. We're on the same curve, just on opposite ends.
-			Your bones don't break, mine do. That's clear. Your cells react to bacteria and viruses differently than mine. You don't get sick, I do. That's also clear. But for some reason, you and I react the exact same way to water. We swallow it too fast, we choke. We get some in our lungs, we drown. However unreal it may seem, we are connected, you and I. We're on the same curve, just on opposite ends.
-		</p>
+		<p><%= user.bio %></p>
 	</div>
 	<div class="mdl-cell mdl-cell--4-col mdl-color--white mdl-color-text--black scroll" style="padding: 15px; padding-top: 0px">
-		<!--<h3>Social</h3>
-		<table>
-			<tr>
-				<td><i class="fa fa-twitter" style="color: #0000FF"></i></td>
-				<td>Twitter - @medsouz</td>
-			</tr>
-			<tr>
-				<td><i class="fa fa-soundcloud" style="color: #FF7700"></i></td>
-				<td>Soundcloud - medsouz</td>
-			</tr>
-			<tr>
-				<td><i class="fa fa-youtube" style="color: #FF0000"></i></td>
-				<td>Youtube - medsouz</td>
-			</tr>
-		</table>-->
-		<h3 class="center">Post</h3>
-		<form action="/user/post" method="post">
-			<textarea class="center" style="width: 90%; display: block; margin-bottom: 10px; height: 140px; resize: none;" name="post"></textarea>
-			<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-600 center" type="submit" value="Create Post">Create Post</button>
-		</form>
+		<% if (!req.user || req.user.id != user.id) { /* Only show follow button if logged in and not on your own profile */ %>
+			<h3 class="center">Social</h3>
+			<table>
+				<tr>
+					<td><i class="fa fa-twitter" style="color: #0000FF"></i></td>
+					<td>Twitter - @<%= user.twitter %></td>
+				</tr>
+				<tr>
+					<td><i class="fa fa-soundcloud" style="color: #FF7700"></i></td>
+					<td>Soundcloud - <%= user.soundcloud %></td>
+				</tr>
+			</table>
+		<% } else { %>
+			<h3 class="center">Post</h3>
+			<form action="/user/post" method="post">
+				<textarea class="center" style="width: 90%; display: block; margin-bottom: 10px; height: 140px; resize: none;" name="post"></textarea>
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-600 center" type="submit" value="Create Post">Create Post</button>
+			</form>
+		<% } %>
 	</div>
 	<!--<div class="mdl-cell mdl-cell--4-col mdl-color--white mdl-color-text--black-100 mdl-shadow--2dp">
 		<h3 class="center" style="margin-top: 0px; margin-bottom: 0px"><i class="material-icons">cloud_upload</i></h3>
@@ -88,16 +84,14 @@
 
 <dialog id="profileSettings" class="mdl-dialog">
 	<h4 class="mdl-dialog__title">Settings</h4>
-	<form>
+	<form action="/user/settings" method="post">
 		<div class="mdl-dialog__content">
 			<h5>Bio</h5>
-			<textarea></textarea>
+			<textarea name="bio"><%= user.bio %></textarea>
 			<h5>Twitter</h5>
-			<input type="text"></input>
+			<input type="text" name="twitter" maxlength="15" value="<%= user.twitter %>"></input>
 			<h5>Soundcloud</h5>
-			<input type="text"></input>
-			<h5>YouTube</h5>
-			<input type="text"></input>
+			<input type="text" name="soundcloud" maxlength="30" value="<%= user.soundcloud %>"></input>
 			<br>
 		</div>
 		<div class="mdl-dialog__actions">

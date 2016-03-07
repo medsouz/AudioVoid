@@ -40,4 +40,25 @@ router.post('/post', function(req, res, next) {
 	}
 });
 
+router.post('/settings', function(req, res, next) {
+	console.log(req.body);
+	if(req.user) {
+		User.findOne({
+			where: {
+				id: req.user.id
+			}
+		}).then(function(user) {
+			user.update({
+				bio: req.body.bio,
+				twitter: req.body.twitter,
+				soundcloud: req.body.soundcloud
+			}).then(function() {
+				res.redirect("/user/" + req.user.username);
+			});
+		});
+	} else {
+		res.redirect("/");
+	}
+});
+
 module.exports = router;
