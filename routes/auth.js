@@ -49,7 +49,7 @@ router.get("/", function(req, res, next) {
 		res.render("login", { req : req, title: 'Login / Register' });
 });
 
-router.post("/login", passport.authenticate("local", { successRedirect: "/", failureRedirect: "/auth" }));
+router.post("/login", passport.authenticate("local", { successRedirect: "/", failureRedirect: "/auth", failureFlash: true }));
 
 router.get("/logout", function(req, res, next) {
 	req.logout();
@@ -65,7 +65,8 @@ router.post("/register", function(req, res, next) {
 			}
 		}).then(function(user) {
 			if(user != null) {
-				console.log("User exists")
+				req.flash("error", "User exists");
+				res.redirect("/auth");
 			} else {
 				console.log("New user");
 				var key = crypto.pbkdf2Sync(req.body.password, "NaCL" /* TODO: Better salting */, 30000, 512, "sha512");
@@ -74,15 +75,14 @@ router.post("/register", function(req, res, next) {
 					email: req.body.email,
 					password: key
 				}).then(function(user){
-					console.log("Created new user!");
+					req.flash("error", "Created new user!");
 					res.redirect("/auth");
 				});
 			}
 		});
 	} else {
-		console.log("Invalid username or password");
+		req.flash("error", "Invalid username or password");
 		res.redirect("/auth");
 	}
 });
-
 module.exports = router;

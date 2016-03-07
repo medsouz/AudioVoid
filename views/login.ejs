@@ -1,5 +1,16 @@
 <% layout('layout') -%>
+
 <div class="mdl-grid">
+	<%
+		var messages = req.flash("error");
+		if (messages.length > 0){
+	%>
+		<div class="mdl-cell mdl-cell--12-col mdl-color--white mdl-color-text--black login-header">
+			<% for(msg in messages) { %>
+			<h3><%= messages[msg] %><h3>
+			<% } %>
+		</div>
+	<% } %>
 	<div class="mdl-cell mdl-cell--6-col mdl-color--white mdl-color-text--black login-header">
 		<h2>Login</h2>
 		<form action="/auth/login" method="post" noajax>
@@ -18,7 +29,7 @@
 	</div>
 	<div class="mdl-cell mdl-cell--6-col mdl-color--white mdl-color-text--black login-header">
 		<h2>Register</h2>
-		<form action="/auth/register" method="post">
+		<form action="/auth/register" method="post" noajax>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 				<input class="mdl-textfield__input" type="text" name="username">
 				<label class="mdl-textfield__label">Username:</label>
