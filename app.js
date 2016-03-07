@@ -8,6 +8,13 @@ var bodyParser = require('body-parser');
 var session = require('express-session')
 var passport = require('passport');
 
+// Global libraries
+// These are functions that are used in many places
+GLOBAL.md5 = require('md5');
+GLOBAL.getGravatar = function(email) {
+	return "http://www.gravatar.com/avatar/" + md5(email) + "/.png?s=512&d=http://medsouz.net/nopic.jpg" // TODO: Host this somewhere else
+}
+
 var routes = require('./routes/index');
 var user = require('./routes/user');
 var auth = require('./routes/auth');
