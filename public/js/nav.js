@@ -40,6 +40,21 @@ $(document).ready(function(){
 			e.preventDefault();
 		}
 	});
+
+	$(document).on('submit', null, function(e) {
+		$(this).prop('disabled', true);
+		if(!$(e.target)[0].hasAttribute("noajax")) {
+			$.ajax({
+				type: "POST",
+				url: e.target.action,
+				data: $(e.target).serialize(),
+				success: function(data, status, req) {
+					setContentURL(req.getResponseHeader("Ajax-Nav-URL"), true);
+				}
+			});
+			e.preventDefault();
+		}
+	});
 })
 
 $(window).on("popstate", function() {

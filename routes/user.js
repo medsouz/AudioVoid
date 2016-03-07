@@ -31,4 +31,13 @@ router.get('/:username', function(req, res, next) {
 	}
 });
 
+router.post('/post', function(req, res, next) {
+	console.log(req.body);
+	if(req.user) {
+		res.redirect("/user/" + req.user.username);
+	} else {
+		res.redirect("/");
+	}
+});
+
 module.exports = router;
