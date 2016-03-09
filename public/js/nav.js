@@ -51,7 +51,9 @@ $(document).ready(function(){
 			$.ajax({
 				type: "POST",
 				url: e.target.action,
-				data: $(e.target).serialize(),
+				data: new FormData(e.target),
+				processData: false,
+				contentType: false,
 				success: function(data, status, req) {
 					setContentHTML(req, data, true);
 				}

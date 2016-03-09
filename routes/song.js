@@ -1,28 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var multer  = require('multer');
-
-var storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, './public/uploads');
-	},
-	filename: function (req, file, cb) {
-		console.log(file);
-		switch(file.mimetype) {
-			case "audio/mp3":
-				cb(null, req.song.id + ".mp3");
-				break;
-			case "image/png":
-				cb(null, req.song.id + ".png");
-				break;
-			default:
-				console.log("Unsupported format");
-				return;
-		}
-	}
-});
-
-var upload = multer({ storage: storage });
+var mv = require("mv");
 
 router.get('/', function(req, res, next) {
 	if(req.user == undefined)
@@ -30,11 +8,18 @@ router.get('/', function(req, res, next) {
 	res.render('song', { req : req, title: 'Song Upload' });
 });
 
-var cpUpload = upload.fields([{ name: 'songfile', maxCount: 1 }, { name: 'coverfile', maxCount: 1 }]);
-
 router.post('/upload', function(req, res, next) {
-	if(req.user == undefined)
+	if(req.user == undefined) {
 		res.redirect("/");
+		return;
+	}
+
+	console.log(req.files);
+	if(req.files.songfile == undefined || req.files.coverfile == undefined) {
+		console.log("Missing files");
+		res.redirect("/song");
+		return;
+	}
 
 	Song.create({
 		title: req.body.SongTitle,
@@ -42,10 +27,12 @@ router.post('/upload', function(req, res, next) {
 		description: req.body.SongDescription,
 		UserId: req.user.id
 	}).then(function(song, err) {
-		req.song = song;
-		cpUpload(req, res, function(err) {
-
-			res.redirect("/");
+		mv(req.files.songfile.file, "./public/uploads/" + song.id + ".mp3", {mkdirp: true}, function(err) {
+			console.log(err);
+			mv(req.files.coverfile.file, "./public/uploads/" + song.id + ".png", {mkdirp: true}, function(err) {
+				console.log(err);
+				res.redirect("/");
+			});
 		});
 	});
 });

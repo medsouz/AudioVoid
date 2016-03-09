@@ -45,7 +45,9 @@ sequelize.sync();
 
 var app = express();
 var bb = require("express-busboy");
-bb.extend(app);
+bb.extend(app, {
+	upload: true
+});
 
 // view engine setup
 app.engine('ejs', engine);
