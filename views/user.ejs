@@ -51,17 +51,14 @@
 	<div class="mdl-cell mdl-cell--4-col mdl-color--white mdl-color-text--black-100 mdl-shadow--2dp">
 		<h1>Placeholder</h1>
 	</div>-->
-
-	<% for(var post = 0; post < 100; post++) { %>
+	<% for(var post in posts) { %>
 		<div class="mdl-cell mdl-cell--6-col mdl-color--white mdl-color-text--black-100 mdl-shadow--2dp">
 			<div class="mdl-grid">
 				<div class="mdl-cell mdl-cell--2-col center">
 					<img src="<%= getGravatar(user.email) %>" style="width: 100%;">
 				</div>
 				<div class="mdl-cell mdl-cell--10-col vertical-flex-parent">
-					<div>
-						This is the bake sale view where users would post statuses and they would pop on on the dashboard just like this. Other users will be able to like and repost a status..
-					</div>
+					<div><%= posts[post].message %></div>
 					<div class="mdl-card--expand"></div>
 					<div>
 						<div class="mdl-tooltip mdl-tooltip--large" for="btnLike<%=post%>">Like</div>

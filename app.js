@@ -37,8 +37,10 @@ var sequelize = new Sequelize('AudioVoid', 'username', 'password', {
 });
 GLOBAL.User = sequelize.import(__dirname + "/models/user.js");
 GLOBAL.Song = sequelize.import(__dirname + "/models/song.js");
+GLOBAL.Post = sequelize.import(__dirname + "/models/post.js");
 
 User.hasMany(Song);
+User.hasMany(Post);
 
 sequelize.sync();
 
