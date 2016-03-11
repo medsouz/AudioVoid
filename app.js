@@ -37,9 +37,12 @@ var sequelize = new Sequelize('AudioVoid', 'username', 'password', {
 GLOBAL.User = sequelize.import(__dirname + "/models/user.js");
 GLOBAL.Song = sequelize.import(__dirname + "/models/song.js");
 GLOBAL.Post = sequelize.import(__dirname + "/models/post.js");
-
 User.hasMany(Song);
 User.hasMany(Post);
+
+GLOBAL.Follow = sequelize.define("Follow");
+User.hasOne(Follow);
+User.hasOne(Follow, { as: "Followed", foreignKey : 'followedId' });
 
 sequelize.sync();
 

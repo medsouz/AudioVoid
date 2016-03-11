@@ -15,8 +15,8 @@ router.get('/:username', function(req, res, next) {
 	var username = req.params.username;
 	// If the user is viewing their own profile then save us a SQL request
 	if(req.user && username == req.user.username) {
-		getUserPosts(req.user.id, function(posts) {
-			res.render('user', { req : req, user: req.user, title: req.user.username + "'s Profile", posts: posts });
+		getUserContent(req.user, function(posts, songs) {
+			res.render('user', { req : req, user: req.user, title: req.user.username + "'s Profile", posts: posts, songs: songs });
 		});
 	} else {
 		User.findOne({
@@ -25,8 +25,8 @@ router.get('/:username', function(req, res, next) {
 			}
 		}).then(function(user, err) {
 			if(user != null) {
-				getUserPosts(user.id, function(posts) {
-					res.render('user', { req : req, user: user, title: user.username + "'s Profile", posts: posts });
+				getUserContent(user, function(posts, songs) {
+					res.render('user', { req : req, user: user, title: user.username + "'s Profile", posts: posts, songs: songs });
 				});
 			} else {
 				res.redirect('/');
@@ -68,14 +68,31 @@ router.post('/settings', function(req, res, next) {
 	}
 });
 
-function getUserPosts(userID, callback) {
-	Post.findAll({
-		where: {
-			UserId: userID
-		},
-		order: [['updatedAt', 'DESC']]
-	}).then(function (posts) {
-		callback(posts);
+router.post('/follow', function(req, res, next) {
+	if(req.user) {
+		User.findById(req.body.userid).then(function(followed, err) {
+			if(followed.id != req.user.id && followed != null) {
+				Follow.create({
+					UserId: req.user.id,
+					followedId: followed.id
+				}).then(function(follow) {
+					console.log(follow);
+					res.send("Done");
+				});
+			} else {
+				res.send("Failed");
+			}
+		});
+	} else {
+		res.send("Failed");
+	}
+});
+
+function getUserContent(user, callback) {
+	user.getPosts().then(function(posts){
+		user.getSongs().then(function(songs){
+			callback(posts, songs);
+		});
 	});
 }
 
