@@ -36,6 +36,10 @@ function setContentHTML(req, data, addToHistory) {
 	$("#content").scrollTop(0);
 }
 
+function ajaxPageReload() {
+	setContentURL(window.location.href, false);
+}
+
 $(document).ready(function(){
 	$(document).on('click', "a[href^='/']", function(e) {
 		if(!$(this)[0].hasAttribute("noajax")) {

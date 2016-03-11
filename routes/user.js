@@ -16,7 +16,7 @@ router.get('/:username', function(req, res, next) {
 	// If the user is viewing their own profile then save us a SQL request
 	if(req.user && username == req.user.username) {
 		getUserContent(req.user, function(posts, songs) {
-			res.render('user', { req : req, user: req.user, title: req.user.username + "'s Profile", posts: posts, songs: songs });
+			res.render('user', { req : req, user: req.user, title: req.user.username + "'s Profile", posts: posts, songs: songs, following: false });
 		});
 	} else {
 		User.findOne({
@@ -25,9 +25,23 @@ router.get('/:username', function(req, res, next) {
 			}
 		}).then(function(user, err) {
 			if(user != null) {
-				getUserContent(user, function(posts, songs) {
-					res.render('user', { req : req, user: user, title: user.username + "'s Profile", posts: posts, songs: songs });
-				});
+				if(req.user) {
+					Follow.findOne({
+						where: {
+							UserId: req.user.id,
+							followedId: user.id
+						}
+					}).then(function(follow, err) {
+						getUserContent(user, function(posts, songs) {
+							res.render('user', { req : req, user: user, title: user.username + "'s Profile", posts: posts, songs: songs, following: (follow != null) });
+						});
+					});
+				} else {
+					getUserContent(user, function(posts, songs) {
+						res.render('user', { req : req, user: user, title: user.username + "'s Profile", posts: posts, songs: songs, following: false });
+					});
+				}
+
 			} else {
 				res.redirect('/');
 			}
@@ -76,21 +90,36 @@ router.post('/follow', function(req, res, next) {
 					UserId: req.user.id,
 					followedId: followed.id
 				}).then(function(follow) {
-					console.log(follow);
-					res.send("Done");
+					res.send(true);
 				});
 			} else {
-				res.send("Failed");
+				res.send(false);
 			}
 		});
 	} else {
-		res.send("Failed");
+		res.send(false);
+	}
+});
+
+router.post('/unfollow', function(req, res, next) {
+	if(req.user) {
+		Follow.findOne({
+			where: {
+				UserId: req.user.id,
+				followedId: req.body.userid
+			}
+		}).then(function(follow, err) {
+			follow.destroy();
+			res.send(true);
+		});
+	} else {
+		res.send(false);
 	}
 });
 
 function getUserContent(user, callback) {
-	user.getPosts().then(function(posts){
-		user.getSongs().then(function(songs){
+	user.getPosts({ order: [['updatedAt', 'DESC']] }).then(function(posts){
+		user.getSongs({ order: [['updatedAt', 'DESC']] }).then(function(songs){
 			callback(posts, songs);
 		});
 	});
