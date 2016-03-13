@@ -8,6 +8,9 @@ function setContentURL(url, addToHistory) {
 		url: url,
 		success: function(data, status, req) {
 			setContentHTML(req, data, addToHistory);
+		},
+		error: function(xhr, textStatus, errorThrown) {
+			window.location = url;
 		}
 	});
 }
