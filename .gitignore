@@ -33,4 +33,4 @@ npm-debug.log
 *.sqlite
 
 # User uploads
-public/uploads/*
+uploads/*

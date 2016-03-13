@@ -3,6 +3,7 @@ module.exports = function(sequelize, DataTypes) {
 		id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
 		title: DataTypes.STRING(30),
 		genre: DataTypes.STRING(20),
-		description: DataTypes.STRING(100)
+		description: DataTypes.STRING(100),
+		plays: DataTypes.INTEGER
 	});
 }
