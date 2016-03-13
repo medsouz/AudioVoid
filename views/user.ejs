@@ -49,10 +49,20 @@
 		<% } %>
 	</div>
 	<div class="mdl-cell mdl-cell--6-col">
-		<%- include templates/songs %>
+		<%
+		for(var s in songs) {
+			var song = songs[s];
+		%>
+			<%- include templates/songs %>
+		<% } %>
 	</div>
 	<div class="mdl-cell mdl-cell--6-col">
-		<%- include templates/posts %>
+		<%
+		for(var p in posts) {
+			var post = posts[p];
+		%>
+			<%- include templates/posts %>
+		<% } %>
 	</div>
 </div>
 

@@ -1,42 +1,41 @@
-<% for(var song in songs) { %>
 <div class="mdl-cell mdl-cell--12-col mdl-color--white mdl-color-text--black-100 mdl-shadow--2dp">
 	<div class="mdl-grid">
 		<div class="mdl-cell mdl-cell--2-col center">
-			<img src="/uploads/<%= songs[song].id %>.png" style="width: 100%;">
+			<img src="/uploads/<%= song.id %>.png" style="width: 100%;">
 		</div>
 		<div class="mdl-cell mdl-cell--10-col vertical-flex-parent">
-			<div class="mdl-tooltip mdl-tooltip--large" for="btnPlaySong<%= song %>">Play</div>
-			<div class="mdl-tooltip mdl-tooltip--large" for="btnQueueSong<%= song %>">Add to queue</div>
+			<div class="mdl-tooltip mdl-tooltip--large" for="btnPlaySong<%= song.id %>">Play</div>
+			<div class="mdl-tooltip mdl-tooltip--large" for="btnQueueSong<%= song.id %>">Add to queue</div>
 			<span>
-				<button id="btnPlaySong<%= song %>" class="mdl-button mdl-js-button mdl-button--icon" onclick="playSong('/uploads/<%= songs[song].id %>.mp3', '<%= songs[song].title.replace("\'", "\\'") %>');">
+				<button id="btnPlaySong<%= song %>" class="mdl-button mdl-js-button mdl-button--icon" onclick="playSong('/uploads/<%= song.id %>.mp3', '<%= song.title.replace("\'", "\\'") %>');">
 					<i class="material-icons">play_arrow</i>
 				</button>
-				<button id="btnQueueSong<%= song %>" class="mdl-button mdl-js-button mdl-button--icon" onclick="addSong('/uploads/<%= songs[song].id %>.mp3', '<%= songs[song].title.replace("\'", "\\'") %>');">
+				<button id="btnQueueSong<%= song %>" class="mdl-button mdl-js-button mdl-button--icon" onclick="addSong('/uploads/<%= song.id %>.mp3', '<%= song.title.replace("\'", "\\'") %>');">
 					<i class="material-icons">playlist_add</i>
 				</button>
-				<b><%= songs[song].title %></b> - <i><%= songs[song].genre %></i>
+				<b><%= song.title %></b> - <i><%= song.genre %></i>
 			</span>
-			<span><%= songs[song].description %></span>
+			<span><%= song.description %></span>
 			<div class="mdl-card--expand"></div>
 			<div>
-				<div class="mdl-tooltip mdl-tooltip--large" for="btnLikeSong<%= song %>">Like</div>
-				<button id="btnLikeSong<%= song %>" class="mdl-button mdl-js-button mdl-button--icon">
+				<div class="mdl-tooltip mdl-tooltip--large" for="btnLikeSong<%= song.id %>">Like</div>
+				<button id="btnLikeSong<%= song.id %>" class="mdl-button mdl-js-button mdl-button--icon">
 					<i class="material-icons">favorite</i>
 				</button>
 				<span>100</span>
 
-				<div class="mdl-tooltip mdl-tooltip--large" for="btnRepostSong<%= song %>">Repost</div>
-				<button id="btnRepostSong<%= song %>" class="mdl-button mdl-js-button mdl-button--icon">
+				<div class="mdl-tooltip mdl-tooltip--large" for="btnRepostSong<%= song.id %>">Repost</div>
+				<button id="btnRepostSong<%= song.id %>" class="mdl-button mdl-js-button mdl-button--icon">
 					<i class="material-icons">repeat</i>
 				</button>
 				<span>100</span>
-				<div class="mdl-tooltip mdl-tooltip--large" for="btnAddtoplaylist<%= song %>">Add to playlist</div>
-				<button id="btnAddtoplaylist<%= song %>" class="mdl-button mdl-js-button mdl-button--icon">
+				<div class="mdl-tooltip mdl-tooltip--large" for="btnAddtoplaylist<%= song.id %>">Add to playlist</div>
+				<button id="btnAddtoplaylist<%= song.id %>" class="mdl-button mdl-js-button mdl-button--icon">
 					<i class="material-icons">playlist_add</i>
 				</button>
 				<span>100</span>
-				<div class="mdl-tooltip mdl-tooltip--large" for="btnshare<%= song %>">Share</div>
-				<button id="btnshare<%= song %>" class="mdl-button mdl-js-button mdl-button--icon">
+				<div class="mdl-tooltip mdl-tooltip--large" for="btnShareSong<%= song.id %>">Share</div>
+				<button id="btnShareSong<%= song.id %>" class="mdl-button mdl-js-button mdl-button--icon">
 					<i class="material-icons">screen_share</i>
 				</button>
 				<span>100</span>
@@ -44,4 +43,3 @@
 		</div>
 	</div>
 </div>
-<% } %>

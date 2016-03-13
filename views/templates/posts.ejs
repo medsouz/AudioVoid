@@ -1,25 +1,23 @@
-<% for(var post in posts) { %>
-	<div class="mdl-cell mdl-cell--12-col mdl-color--white mdl-color-text--black-100 mdl-shadow--2dp">
-		<div class="mdl-grid">
-			<div class="mdl-cell mdl-cell--2-col center">
-				<img src="<%= getGravatar(user.email) %>" style="width: 100%;">
-			</div>
-			<div class="mdl-cell mdl-cell--10-col vertical-flex-parent">
-				<div><%= posts[post].message %></div>
-				<div class="mdl-card--expand"></div>
-				<div>
-					<div class="mdl-tooltip mdl-tooltip--large" for="btnLike<%=post%>">Like</div>
-					<button id="btnLike<%=post%>" class="mdl-button mdl-js-button mdl-button--icon">
-						<i class="material-icons">favorite</i>
-					</button>
-					<span>100</span>
-					<div class="mdl-tooltip mdl-tooltip--large" for="btnRepost<%=post%>">Repost</div>
-					<button id="btnRepost<%=post%>" class="mdl-button mdl-js-button mdl-button--icon">
-						<i class="material-icons">repeat</i>
-					</button>
-					<span>100</span>
-				</div>
+<div class="mdl-cell mdl-cell--12-col mdl-color--white mdl-color-text--black-100 mdl-shadow--2dp">
+	<div class="mdl-grid">
+		<div class="mdl-cell mdl-cell--2-col center">
+			<img src="<%= getGravatar(user.email) %>" style="width: 100%;">
+		</div>
+		<div class="mdl-cell mdl-cell--10-col vertical-flex-parent">
+			<div><%= post.message %></div>
+			<div class="mdl-card--expand"></div>
+			<div>
+				<div class="mdl-tooltip mdl-tooltip--large" for="btnLikePost<%= post.id %>">Like</div>
+				<button id="btnLikePost<%= post.id %>" class="mdl-button mdl-js-button mdl-button--icon">
+					<i class="material-icons">favorite</i>
+				</button>
+				<span>100</span>
+				<div class="mdl-tooltip mdl-tooltip--large" for="btnRepostPost<%= post.id %>">Repost</div>
+				<button id="btnRepostPost<%= post.id %>" class="mdl-button mdl-js-button mdl-button--icon">
+					<i class="material-icons">repeat</i>
+				</button>
+				<span>100</span>
 			</div>
 		</div>
 	</div>
-<% } %>
+</div>

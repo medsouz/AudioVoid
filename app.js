@@ -41,8 +41,8 @@ User.hasMany(Song);
 User.hasMany(Post);
 
 GLOBAL.Follow = sequelize.define("Follow");
-User.hasOne(Follow);
-User.hasOne(Follow, { as: "Followed", foreignKey : 'followedId' });
+User.hasMany(Follow, { as: "Followed" });
+User.hasMany(Follow, { as: "Followers", foreignKey : 'followedId' });
 
 sequelize.sync();
 

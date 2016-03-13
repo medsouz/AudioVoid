@@ -1,122 +1,30 @@
 <% layout('layout') -%>
 <div class="mdl-grid">
-	<div class="mdl-cell mdl-cell--6-col mdl-color--white mdl-color-text--black-100 mdl-shadow--2dp">
-		<div class="mdl-grid">
-			<div class="mdl-cell mdl-cell--4-col">
-				<img src="/img/demoprofilepic.jpg" style="width: 100%;">
-			</div>
-			<div class="mdl-cell mdl-cell--8-col vertical-flex-parent">
-				<div>
-					This is the baic user view where users would post statuses and they would pop on on the dashboard just like this. Other users will be able to like and repost a status..
-				</div>
-				<div class="mdl-card--expand"></div>
-				<div>
-					<div class="mdl-tooltip mdl-tooltip--large" for="btnLike">Like</div>
-					<button id="btnLike" class="mdl-button mdl-js-button mdl-button--icon">
-						<i class="material-icons">favorite</i>
-					</button>
-					<span id="txtRepost">100</span>
-					<div class="mdl-tooltip mdl-tooltip--large" for="btnRepost">Repost</div>
-					<button id="btnRepost" class="mdl-button mdl-js-button mdl-button--icon">
-						<i class="material-icons">repeat</i>
-					</button>
-					<span id="txtRepost">100</span>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--code below is for the artist upload dashboard -->
-	<div class="mdl-cell mdl-cell--6-col mdl-color--white mdl-color-text--black-100 mdl-shadow--2dp">
-		<div class="mdl-grid">
-			<div class="mdl-cell mdl-cell--4-col">
-				<img src="/img/demoprofilepic.jpg" style="width: 100%;">
-			</div>
-			<div class="mdl-cell mdl-cell--8-col vertical-flex-parent">
-				<div class="mdl-cell mdl-cell--12-col mdl-color--white mdl-color-text--black-100 mdl-shadow--2dp">
-					<div>
-						<img src="/img/demoprofilepic.jpg" style="width: 20%;">
-						<div class="mdl-tooltip mdl-tooltip--large" for="btnPlaySong">Play</div>
-						<button id="btnPlaySong" class="mdl-button mdl-js-button mdl-button--icon">
-							<i class="material-icons">play_arrow</i>
-						</button>
-						music goes here..
-
-						<br>
-						<br>
-						<div style="margin-left: auto; display: table;">
-							<div class="mdl-tooltip mdl-tooltip--large" for="btnLike3">Like</div>
-							<button id="btnLike3" class="mdl-button mdl-js-button mdl-button--icon">
-								<i class="material-icons">favorite</i>
-							</button>
-							<span id="txtRepost">100</span>
-
-							<div class="mdl-tooltip mdl-tooltip--large" for="btnRepost3">Repost</div>
-							<button id="btnRepost3" class="mdl-button mdl-js-button mdl-button--icon">
-								<i class="material-icons">repeat</i>
-							</button>
-							<span id="txtRepost">100</span>
-							<div class="mdl-tooltip mdl-tooltip--large" for="btnAddtoplaylist3">Add to playlist</div>
-							<button id="btnAddtoplaylist3" class="mdl-button mdl-js-button mdl-button--icon">
-								<i class="material-icons">playlist_add</i>
-							</button>
-							<span id="txtRepost">100</span>
-							<div class="mdl-tooltip mdl-tooltip--large" for="btnshare3">Share</div>
-							<button id="btnshare3" class="mdl-button mdl-js-button mdl-button--icon">
-								<i class="material-icons">screen_share</i>
-							</button>
-							<span id="txtRepost">100</span>
-						</div>
+	<div class="mdl-cell mdl-cell--6-col">
+		<%
+		for(var s in songs) {
+			var song = songs[s];
+			var user = users[song.UserId];
+		%>
+			<div class="mdl-cell mdl-cell--12-col mdl-color--white mdl-color-text--black-100 mdl-shadow--2dp">
+				<div class="mdl-grid">
+					<div class="mdl-cell mdl-cell--2-col center">
+						<img src="<%= getGravatar(user.email) %>" style="width: 100%;">
+					</div>
+					<div class="mdl-cell mdl-cell--10-col">
+						<%- include templates/songs %>
 					</div>
 				</div>
 			</div>
-			<div class="mdl-card--expand"></div>
-			<div style="display: table;">
-				<div class="mdl-tooltip mdl-tooltip--large" for="btnLike2">Like</div>
-				<button id="btnLike2" class="mdl-button mdl-js-button mdl-button--icon">
-					<i class="material-icons">favorite</i>
-				</button>
-				<span id="txtRepost">100</span>
-
-				<div class="mdl-tooltip mdl-tooltip--large" for="btnRepost2">Repost</div>
-				<button id="btnRepost2" class="mdl-button mdl-js-button mdl-button--icon">
-					<i class="material-icons">repeat</i>
-				</button>
-				<span id="txtRepost">100</span>
-				<div class="mdl-tooltip mdl-tooltip--large" for="btnshare2">Share</div>
-				<button id="btnshare2" class="mdl-button mdl-js-button mdl-button--icon">
-					<i class="material-icons">screen_share</i>
-				</button>
-				<span id="txtRepost">100</span>
-			</div>
-		</div>
+		<% } %>
 	</div>
-
-</div>
-<!--code below is the stats for a normal users profile. Has how many views they have in a day and total -->
-<div class="mdl-cell mdl-cell--3-col mdl-color--white mdl-color-text--black-100 mdl-shadow--2dp">
-	<div class="mdl-grid">
-		<div style="margin-left: auto; margin-right: auto;">
-			<p>
-				<b>Plays today</b>
-				<br>
-				<i class="material-icons">today</i>
-				<br>
-				10000</p>
-		</div>
-		<div style="margin-left: auto; margin-right: auto;">
-			<p>
-				<b>Total plays</b>
-				<br>
-				<i class="material-icons">play_arrow</i>
-				<br>
-				50,000</p>
-		</div>
+	<div class="mdl-cell mdl-cell--6-col">
+		<%
+		for(var p in posts) {
+			var post = posts[p];
+			var user = users[post.UserId];
+		%>
+			<%- include templates/posts %>
+		<% } %>
 	</div>
 </div>
-<!--
-
-<div class="mdl-cell mdl-cell--1-col mdl-color--white mdl-color-text--black">
-<div class="mdl-cell mdl-cell--1-col mdl-color--white mdl-color-text--black">ldghjdkfhkjdhfkd </div>
-</div>
-
--->

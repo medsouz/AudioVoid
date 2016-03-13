@@ -25,7 +25,7 @@ router.get('/:username', function(req, res, next) {
 			}
 		}).then(function(user, err) {
 			if(user != null) {
-				if(req.user) {
+				if(req.user && req.user.id != user.id) {
 					Follow.findOne({
 						where: {
 							UserId: req.user.id,
