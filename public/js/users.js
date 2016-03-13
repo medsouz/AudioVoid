@@ -16,6 +16,16 @@ function unfollowUser(userID) {
 	});
 }
 
-function repostSong(songID) {
+function repostPost(postID) {
+	$.post("/user/repost", { id: postID, type: 0 }).done(function(success) {
+		if(success)
+			ajaxPageReload();
+	});
+}
 
+function repostSong(songID) {
+	$.post("/user/repost", { id: songID, type: 1 }).done(function(success) {
+		if(success)
+			ajaxPageReload();
+	});
 }

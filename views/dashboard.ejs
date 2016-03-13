@@ -2,7 +2,7 @@
 <div class="mdl-grid">
 	<div class="mdl-cell mdl-cell--6-col">
 		<% for(var s in songs) { %>
-			<%- partial("templates/repost", {view: "song", options: {user: users[songs[s].UserId], song: songs[s]},  user: users[songs[s].UserId]}) %>
+			<%- partial("templates/repost", {view: "song", options: { song: songs[s]},  user: users[songs[s].UserId]}) %>
 		<% } %>
 	</div>
 	<div class="mdl-cell mdl-cell--6-col">

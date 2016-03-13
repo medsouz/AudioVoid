@@ -49,19 +49,17 @@
 		<% } %>
 	</div>
 	<div class="mdl-cell mdl-cell--6-col">
-		<%
-		for(var s in songs) {
-			var song = songs[s];
-		%>
-			<%- partial("templates/song", { user: user, song: song }) %>
+		<% for(var s in songs) { %>
+			<% if(songs[s].UserId == user.id) { %>
+				<%- partial("templates/song", { song: songs[s] }) %>
+			<% } else { %>
+				<%- partial("templates/repost", {view: "song", options: {song: songs[s]},  user: users[songs[s].UserId]}) %>
+			<% } %>
 		<% } %>
 	</div>
 	<div class="mdl-cell mdl-cell--6-col">
-		<%
-		for(var p in posts) {
-			var post = posts[p];
-		%>
-			<%- partial("templates/post", {user: user, post: post }) %>
+		<% for(var p in posts) { %>
+			<%- partial("templates/post", {user: users[posts[p].UserId], post: posts[p] }) %>
 		<% } %>
 	</div>
 </div>

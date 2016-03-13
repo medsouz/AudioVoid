@@ -29,7 +29,7 @@ function getFollowerContent(user, callback) {
 			Song.findAll({ where: { UserId: { $in: followedIDs } }, order: [['updatedAt', 'DESC']] }).then(function(songs, err) {
 				for(var s in songs) {
 					if(userIDs.indexOf(songs[s].UserId) == -1)
-						users[userIDs.length] = songs[s].UserId;
+						usersIDs[userIDs.length] = songs[s].UserId;
 				}
 				User.findAll({ where: { id: { $in: userIDs }}}).then(function (users, err) {
 					var usersOut = [];

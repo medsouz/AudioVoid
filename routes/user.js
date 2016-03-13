@@ -15,8 +15,8 @@ router.get('/:username', function(req, res, next) {
 	var username = req.params.username;
 	// If the user is viewing their own profile then save us a SQL request
 	if(req.user && username == req.user.username) {
-		getUserContent(req.user, function(posts, songs) {
-			res.render('user', { req : req, user: req.user, title: req.user.username + "'s Profile", posts: posts, songs: songs, following: false });
+		getUserContent(req.user, function(posts, songs, users) {
+			res.render('user', { req : req, user: req.user, title: req.user.username + "'s Profile", posts: posts, songs: songs, following: false, users: users });
 		});
 	} else {
 		User.findOne({
@@ -32,13 +32,13 @@ router.get('/:username', function(req, res, next) {
 							followedId: user.id
 						}
 					}).then(function(follow, err) {
-						getUserContent(user, function(posts, songs) {
-							res.render('user', { req : req, user: user, title: user.username + "'s Profile", posts: posts, songs: songs, following: (follow != null) });
+						getUserContent(user, function(posts, songs, users) {
+							res.render('user', { req : req, user: user, title: user.username + "'s Profile", posts: posts, songs: songs, following: (follow != null), users: users });
 						});
 					});
 				} else {
-					getUserContent(user, function(posts, songs) {
-						res.render('user', { req : req, user: user, title: user.username + "'s Profile", posts: posts, songs: songs, following: false });
+					getUserContent(user, function(posts, songs, users) {
+						res.render('user', { req : req, user: user, title: user.username + "'s Profile", posts: posts, songs: songs, following: false, users: users });
 					});
 				}
 
@@ -117,10 +117,86 @@ router.post('/unfollow', function(req, res, next) {
 	}
 });
 
+router.post('/repost', function(req, res, next) {
+	if(req.user) {
+		if(req.body.type == 0) {
+			Post.findById(req.body.id).then(function(reposted, err) {
+				if(reposted != null) {
+					Repost.create({
+						UserId: req.user.id,
+						PostId: reposted.id,
+						type: 0
+					}).then(function(repost) {
+						res.send(true);
+					});
+				} else {
+					res.send(false);
+				}
+			});
+		} else if(req.body.type == 1) {
+			Song.findById(req.body.id).then(function(reposted, err) {
+				if(reposted != null) {
+					Repost.create({
+						UserId: req.user.id,
+						SongId: reposted.id,
+						type: 1
+					}).then(function(repost) {
+						res.send(true);
+					});
+				} else {
+					res.send(false);
+				}
+			});
+		} else {
+			res.send(false);
+		}
+	} else {
+		res.send(false);
+	}
+});
+
 function getUserContent(user, callback) {
-	user.getPosts({ order: [['updatedAt', 'DESC']] }).then(function(posts){
-		user.getSongs({ order: [['updatedAt', 'DESC']] }).then(function(songs){
-			callback(posts, songs);
+	user.getReposts().then(function(reposts){
+		var repostedPosts = [];
+		var repostedSongs = [];
+		var userIDs = [];
+		for(r in reposts) {
+			if(reposts[r].type == 0)
+				repostedPosts[repostedPosts.length] = reposts[r].PostId;
+			else if (reposts[r].type == 1)
+				repostedSongs[repostedSongs.length] = reposts[r].SongId;
+			else
+				console.log("Invalid repost type: " + reposts[r].type);
+		}
+		console.log("Reposted songs: " + repostedSongs.length);
+		console.log("Reposted posts: " + repostedPosts.length);
+		Post.findAll({
+			where: {
+				$or: [{ UserId: user.id }, {id: { $in: repostedPosts }}]
+			},
+			order: [['updatedAt', 'DESC']]
+		}).then(function(posts){
+			for(var p in posts) {
+				if(userIDs.indexOf(posts[p].UserId) == -1)
+					userIDs[userIDs.length] = posts[p].UserId;
+			}
+			Song.findAll({
+				where: {
+					$or: [{ UserId: user.id }, {id: { $in: repostedSongs }}]
+				},
+				order: [['updatedAt', 'DESC']]
+			}).then(function(songs){
+				for(var s in songs) {
+					if(userIDs.indexOf(songs[s].UserId) == -1)
+						userIDs[userIDs.length] = songs[s].UserId;
+				}
+				User.findAll({ where: { id: { $in: userIDs }}}).then(function (users, err) {
+					var usersOut = [];
+					for(var u in users)
+						usersOut[users[u].id] = users[u];
+					callback(posts, songs, usersOut);
+				});
+			});
 		});
 	});
 }

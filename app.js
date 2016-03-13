@@ -40,6 +40,11 @@ GLOBAL.Post = sequelize.import(__dirname + "/models/post.js");
 User.hasMany(Song);
 User.hasMany(Post);
 
+GLOBAL.Repost = sequelize.import(__dirname + "/models/repost.js");
+User.hasMany(Repost);
+Song.hasMany(Repost);
+Post.hasMany(Repost);
+
 GLOBAL.Follow = sequelize.define("Follow");
 User.hasMany(Follow, { as: "Followed" });
 User.hasMany(Follow, { as: "Followers", foreignKey : 'followedId' });
