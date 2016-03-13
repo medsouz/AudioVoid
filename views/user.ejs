@@ -53,7 +53,7 @@
 		for(var s in songs) {
 			var song = songs[s];
 		%>
-			<%- include templates/songs %>
+			<%- partial("templates/song", { user: user, song: song }) %>
 		<% } %>
 	</div>
 	<div class="mdl-cell mdl-cell--6-col">
@@ -61,7 +61,7 @@
 		for(var p in posts) {
 			var post = posts[p];
 		%>
-			<%- include templates/posts %>
+			<%- partial("templates/post", {user: user, song: song }) %>
 		<% } %>
 	</div>
 </div>
