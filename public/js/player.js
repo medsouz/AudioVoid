@@ -7,10 +7,11 @@ var player;
 var playlist = [];
 var playlistIndex = 0;
 
-function addSong(songUrl, songName) {
+function addSong(songUrl, songName, cover) {
 	var song = {
 		url: songUrl,
-		name: songName
+		name: songName,
+		cover: cover
 	}
 	playlist[playlist.length] = song;
 	//If this is the only song in the queue then start
@@ -19,16 +20,17 @@ function addSong(songUrl, songName) {
 	}
 }
 
-function playSong(url, name) {
+function playSong(url, name, cover) {
 	playlist = [];
 	playlistIndex = 0;
-	addSong(url, name);
+	addSong(url, name, cover);
 }
 
 function startSong() {
 	$("#songScrubber")[0].MaterialSlider.change(0);
 	player.src = playlist[playlistIndex].url;
-	$("#trackName").text(playlist[playlistIndex].name)
+	$("#trackName").text(playlist[playlistIndex].name);
+	$("#albumArt").attr("src", playlist[playlistIndex].cover);
 	player.play();
 }
 
