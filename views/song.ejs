@@ -2,6 +2,16 @@
 <form action="/song/upload" method="post" enctype="multipart/form-data">
 
 	<div class="mdl-grid">
+		<%
+			var messages = req.flash("error");
+			if (messages.length > 0){
+		%>
+			<div class="mdl-cell mdl-cell--12-col mdl-color--white mdl-color-text--black login-header">
+				<% for(msg in messages) { %>
+				<h3><%= messages[msg] %><h3>
+				<% } %>
+			</div>
+		<% } %>
 		<div class="mdl-cell mdl-cell--4-col mdl-color--white mdl-color-text--black login-header" style="margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto; padding-top: 2px; bottom-padding: 0px;">
 			<b>Upload and share your music</b>
 			<br>

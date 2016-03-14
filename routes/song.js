@@ -15,8 +15,21 @@ router.post('/upload', function(req, res, next) {
 	}
 
 	console.log(req.files);
-	if(req.files.songfile == undefined || req.files.coverfile == undefined) {
+	if(req.files.songfile.filename == "" || req.files.coverfile.filename == "") {
 		console.log("Missing files");
+		req.flash("error", "Audio or Cover Photo Missing")
+		res.redirect("/song");
+		return;
+	}
+
+	if(req.body.SongTitle == "" || req.body.SongGenre == "" || req.body.SongDescription == "")
+	{
+		if(req.body.SongTitle == "")
+			req.flash("error", "Song Title Required");
+		if(req.body.SongGenre == "")
+			req.flash("error", "Song Genre Required");
+		if(req.body.SongDescription == "")
+			req.flash("error", "Song Description Required");
 		res.redirect("/song");
 		return;
 	}
