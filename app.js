@@ -49,6 +49,50 @@ GLOBAL.Follow = sequelize.define("Follow");
 User.hasMany(Follow, { as: "Followed" });
 User.hasMany(Follow, { as: "Followers", foreignKey : 'followedId' });
 
+GLOBAL.getUserContent = function (userList, callback) {
+	Repost.findAll({ where: { UserId: { $in: userList } }}).then(function(reposts){
+		var repostedPosts = [];
+		var repostedSongs = [];
+		var userIDs = [];
+		for(r in reposts) {
+			if(reposts[r].type == 0)
+				repostedPosts[repostedPosts.length] = reposts[r].PostId;
+			else if (reposts[r].type == 1)
+				repostedSongs[repostedSongs.length] = reposts[r].SongId;
+			else
+				console.log("Invalid repost type: " + reposts[r].type);
+		}
+		Post.findAll({
+			where: {
+				$or: [{ UserId: { $in: userList } }, {id: { $in: repostedPosts }}]
+			},
+			order: [['createdAt', 'DESC']]
+		}).then(function(posts){
+			for(var p in posts) {
+				if(userIDs.indexOf(posts[p].UserId) == -1)
+					userIDs[userIDs.length] = posts[p].UserId;
+			}
+			Song.findAll({
+				where: {
+					$or: [{ UserId: { $in: userList } }, {id: { $in: repostedSongs }}]
+				},
+				order: [['createdAt', 'DESC']]
+			}).then(function(songs){
+				for(var s in songs) {
+					if(userIDs.indexOf(songs[s].UserId) == -1)
+						userIDs[userIDs.length] = songs[s].UserId;
+				}
+				User.findAll({ where: { id: { $in: userIDs }}}).then(function (users, err) {
+					var usersOut = [];
+					for(var u in users)
+						usersOut[users[u].id] = users[u];
+					callback(posts, songs, usersOut);
+				});
+			});
+		});
+	});
+}
+
 sequelize.sync();
 
 var app = express();
