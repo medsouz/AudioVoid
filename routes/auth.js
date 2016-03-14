@@ -4,6 +4,7 @@ var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 var crypto = require("crypto");
 var validator = require("validator");
+var Sequelize = require("sequelize");
 
 passport.serializeUser(function(user, done) {
 	done(null, user.id);
@@ -26,10 +27,8 @@ passport.use(new LocalStrategy(
 	function(name, password, done) {
 		var key = crypto.pbkdf2Sync(password, "NaCL" /* TODO: Better salting */, 30000, 512, "sha512");
 		User.findOne({
-			where: {
-				username: name,
-				password: key
-			}
+			where: Sequelize.where(Sequelize.fn('lower', Sequelize.col('username')), Sequelize.fn('lower', name)),
+			$and: { password: key }
 		}).then(function(user, err) {
 			if(user != null) {
 				done(null, user);
@@ -58,14 +57,14 @@ router.get("/logout", function(req, res, next) {
 
 router.post("/register", function(req, res, next) {
 	//TODO: Setup flash messages to tell the user about success/failure.
-	if(validator.isEmail(req.body.email) && validator.matches(req.body.username, "^[a-z0-9_]{3,20}$") && req.body.password == req.body.confirmPassword) {
+	if(validator.isEmail(req.body.email) && validator.matches(req.body.username, "^[A-Za-z0-9_]{3,20}$") && req.body.password == req.body.confirmPassword) {
 		User.findOne({
 			where: {
-				$or: [{username: req.body.username}, {email: req.body.email}]
+				$or: [Sequelize.where(Sequelize.fn('lower', Sequelize.col('username')), Sequelize.fn('lower', req.body.username)), Sequelize.where(Sequelize.fn('lower', Sequelize.col('email')), Sequelize.fn('lower', req.body.email))]
 			}
 		}).then(function(user) {
 			if(user != null) {
-				req.flash("error", "User exists");
+				req.flash("error", "Username or email is already in use");
 				res.redirect("/auth");
 			} else {
 				console.log("New user");
