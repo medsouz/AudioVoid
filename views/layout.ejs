@@ -110,44 +110,48 @@
 						<% } %>
 						<div class="mdl-card--expand"></div>
 						<audio id='songs'></audio>
-							<canvas id='cvsVisualizer'></canvas>
-							<span id="trackName">Track Name</span>
-							<div id="songTimer">0</div>
-							<div id='overlay'>
+						<canvas id='cvsVisualizer'></canvas>
+
+						<div class="mdl-cell mdl-cell--12-col mdl-color--gray mdl-color-text--black-100 mdl-shadow--2dp">
+							<img src="/img/albumcover.jpg" style="width: 30px; height: 30px; float: left;">
+							<span id="trackName" style="padding-top: 10px; margin-left:auto margin-right:auto; display:table">Track Name</span>
+							<div style="padding-top:15px;">
 								<input id='songScrubber' class="mdl-slider mdl-js-slider " type="range"
 								  min="0" max="1000" value="0" tabindex="0">
-								<table>
-									<tr>
-										<td>
-											<button id='btnPrevious' class="mdl-button mdl-js-button mdl-button--icon">
-											  <i id='iconPrevious' class="material-icons">skip_previous</i>
-											</button>
-										</td>
-										<td>
-											<button id='btnPlay' class="mdl-button mdl-js-button mdl-button--icon">
-											  <i id='iconPlay' class="material-icons">play_arrow</i>
-											</button>
-										</td>
-										<td>
-											<button id='btnNext' class="mdl-button mdl-js-button mdl-button--icon">
-											  <i id='iconNext' class="material-icons">skip_next</i>
-											</button>
-										</td>
-										<td>
-											<button id='btnNext' class="mdl-button mdl-js-button mdl-button--icon">
-											  <i id='volumeButton' class="material-icons">volume_up</i>
-											</button>
-										</td>
-										<td>
-											<input id='volumeSlider' class="mdl-slider mdl-js-slider " type="range"
-											  min="0" max="100" value="100" tabindex="0">
-										</td>
-										<td>
-
-										</td>
-									</tr>
-								</table>
 							</div>
+							<table style="margin-left:auto; margin-right:auto;">
+								<tr>
+									<td>
+										<button id='btnPrevious' class="mdl-button mdl-js-button mdl-button--icon">
+										  <i id='iconPrevious' class="material-icons">skip_previous</i>
+										</button>
+									</td>
+									<td>
+										<button id='btnPlay' class="mdl-button mdl-js-button mdl-button--icon">
+										  <i id='iconPlay' class="material-icons">play_arrow</i>
+										</button>
+									</td>
+									<td>
+										<button id='btnNext' class="mdl-button mdl-js-button mdl-button--icon">
+										  <i id='iconNext' class="material-icons">skip_next</i>
+										</button>
+									</td>
+								</tr>
+							</table>
+							<table style="margin-left:auto; margin-right:auto;">
+								<tr>
+									<td>
+										<button id='btnNext' class="mdl-button mdl-js-button mdl-button--icon">
+										  <i id='volumeButton' class="material-icons">volume_up</i>
+										</button>
+									</td>
+									<td>
+										<input id='volumeSlider' class="mdl-slider mdl-js-slider " type="range"
+										  min="0" max="100" value="100" tabindex="0">
+									</td>
+								</tr>
+							</table>
+						</div>
 					</nav>
 				</div>
 				<main id="content" class="mdl-layout__content mdl-color--grey-900">
