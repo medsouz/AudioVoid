@@ -1,7 +1,7 @@
 <div class="mdl-cell mdl-cell--12-col mdl-color--white mdl-color-text--black-100 mdl-shadow--2dp">
 	<div class="mdl-grid">
 		<div class="mdl-cell mdl-cell--2-col center">
-			<img src="<%= getGravatar(user.email) %>" style="width: 100%;">
+			<a href="/user/<%= user.username %>/"><img src="<%= getGravatar(user.email) %>" style="width: 100%;"></a>
 			<span class="center"><%= user.username %></span>
 		</div>
 		<div class="mdl-cell mdl-cell--10-col">
