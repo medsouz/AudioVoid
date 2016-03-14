@@ -59,7 +59,8 @@ router.post('/upload', function(req, res, next) {
 		title: req.body.SongTitle,
 		genre: req.body.SongGenre,
 		description: req.body.SongDescription,
-		UserId: req.user.id
+		UserId: req.user.id,
+		plays: 0
 	}).then(function(song, err) {
 		mv(req.files.songfile.file, "./uploads/" + song.id + ".mp3", {mkdirp: true}, function(err) {
 			console.log(err);

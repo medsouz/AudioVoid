@@ -58,7 +58,7 @@ router.get("/logout", function(req, res, next) {
 
 router.post("/register", function(req, res, next) {
 	//TODO: Setup flash messages to tell the user about success/failure.
-	if(validator.isEmail(req.body.email) && validator.matches(req.body.username, "^[a-z0-9_]{3,20}$")) {
+	if(validator.isEmail(req.body.email) && validator.matches(req.body.username, "^[a-z0-9_]{3,20}$") && req.body.password == req.body.confirmPassword) {
 		User.findOne({
 			where: {
 				$or: [{username: req.body.username}, {email: req.body.email}]
@@ -73,7 +73,10 @@ router.post("/register", function(req, res, next) {
 				User.create({
 					username: req.body.username,
 					email: req.body.email,
-					password: key
+					password: key,
+					bio: "",
+					twitter: "N/A",
+					soundcloud: "N/A"
 				}).then(function(user){
 					req.flash("error", "Created new user!");
 					res.redirect("/auth");
