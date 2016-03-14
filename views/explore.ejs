@@ -1,0 +1,10 @@
+<% layout('layout') -%>
+<div class="mdl-grid">
+	<% for(u in users) { %>
+		<div class="mdl-cell mdl-cell--4-col mdl-color--white mdl-color-text--black-100 mdl-shadow--2dp">
+			<a href="/user/<%= users[u].username %>/"><img src="<%= getGravatar(users[u].email) %>" style="width: 100%;"></a>
+			<h3 class="center"><%= users[u].username %></h3>
+			<i class="center">Posts: <%= users[u].numPosts %> Songs: <%= users[u].numSongs %></i>
+		</div>
+	<% } %>
+</div>

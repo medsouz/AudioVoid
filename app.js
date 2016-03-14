@@ -19,6 +19,7 @@ var routes = require('./routes/index');
 var user = require('./routes/user');
 var auth = require('./routes/auth');
 var song = require('./routes/song');
+var explore = require('./routes/explore');
 
 // Create global database definitions
 var Sequelize = require("sequelize");
@@ -131,6 +132,7 @@ app.use('/', routes);
 app.use('/user', user);
 app.use('/auth', auth);
 app.use('/song', song);
+app.use('/explore', explore);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
