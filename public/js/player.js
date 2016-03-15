@@ -6,7 +6,6 @@ var player;
 
 var playlist = [];
 var playlistIndex = 0;
-var itemPlaying = 0;
 
 function addSong(songUrl, songName, cover) {
 	var song = {
@@ -146,9 +145,6 @@ $(document).ready(function(){
 			else
 				player.pause();
 		}
-	});
-
-	$("#btnPlayQ" + playlistIndex).click(function() {
 	});
 
 	var lastVolume = 100;
