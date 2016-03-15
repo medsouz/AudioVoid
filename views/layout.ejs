@@ -132,13 +132,18 @@
 										</button>
 									</td>
 									<td>
-										<button id='btnPlay' class="mdl-button mdl-js-button mdl-button--icon">
-										  <i id='iconPlay' class="material-icons">play_arrow</i>
+										<button id='btnPlay' class='mdl-button mdl-js-button mdl-button--icon'>
+										  <i id='iconPlay' class='material-icons'>play_arrow</i>
 										</button>
 									</td>
 									<td>
 										<button id='btnNext' class="mdl-button mdl-js-button mdl-button--icon">
 										  <i id='iconNext' class="material-icons">skip_next</i>
+										</button>
+									</td>
+									<td>
+										<button id='musicQueue' class="mdl-button mdl-js-button mdl-button--icon" onclick="showMusicMenu()">
+										  <i id='iconQueue' class="material-icons">queue_music</i>
 										</button>
 									</td>
 								</tr>
@@ -166,5 +171,12 @@
 			<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
 		</body>
 	</html>
+
+	<dialog id="musicMenu" class="mdl-dialog">
+		<div id="musicQueueList">
+
+		</div>
+		<button type="button" class="mdl-button close" onclick="$('#musicMenu')[0].close();">Cancel</button>
+	</dialog>
 
 <% } %>
