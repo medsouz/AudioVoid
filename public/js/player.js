@@ -6,6 +6,7 @@ var player;
 
 var playlist = [];
 var playlistIndex = 0;
+var itemPlaying = 0;
 
 function addSong(songUrl, songName, cover) {
 	var song = {
@@ -51,6 +52,36 @@ function clearVisualizer() {
 	visualizerCtx.fillRect(0, 0, visualizer.width, visualizer.height); // Clear the canvas
 }
 
+function showMusicMenu() {
+	$('#musicMenu')[0].showModal();
+	updateQueue();
+}
+
+function queueClick(indexNum) {
+	if (playlistIndex == indexNum) // if this song is playing
+	{
+		if(player.paused)
+			player.play();
+		else
+			player.pause();
+	}
+	else
+	{
+		playlistIndex = indexNum;
+		startSong();
+	}
+	updateQueue();
+}
+function updateQueue() {
+	$("#musicQueueList").empty();
+	var text = "<table style='border: 1px solid black;'>";
+	for (p in playlist)
+	{
+			text += "<tr style='"+ ((p == playlistIndex) ? "background-color:gray" : "") + "'><td style='padding: 0px 20px 0px 20px;'><button id='btnPlayQ" + p + "' class='mdl-button mdl-js-button mdl-button--icon'><i id='iconPlayQ" + p + "' class='material-icons' onclick='queueClick(" + p + ")'>" + ((p == playlistIndex && !player.paused) ? "pause" : "play_arrow") + "</i></button></td><td><img style='height:20px;' src=" + playlist[p].cover + "></td><td style='padding: 0px 20px 0px 20px; font-weight: bold;'>" + playlist[p].name + "</td></tr>";
+	}
+	text += "</table>";
+	$("#musicQueueList").append(text);
+}
 $(document).ready(function(){
 	visualizer = $("#cvsVisualizer")[0];
 	visualizerCtx = visualizer.getContext("2d");
@@ -115,6 +146,9 @@ $(document).ready(function(){
 			else
 				player.pause();
 		}
+	});
+
+	$("#btnPlayQ" + playlistIndex).click(function() {
 	});
 
 	var lastVolume = 100;
