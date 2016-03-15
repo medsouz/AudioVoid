@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var mv = require("mv");
 var path = require('path');
+var fs = require("fs");
+var os = require("os");
 
 router.get('/', function(req, res, next) {
 	if(req.user == undefined)
@@ -35,25 +37,30 @@ router.post('/upload', function(req, res, next) {
 		return;
 	}
 
+	if(req.body.SongGenre == "")
+		req.body.SongGenre = "No Genre";
+	if(req.body.SongDescription == "")
+		req.body.SongDescription = "No Description";
+	if(req.files.coverfile.filename == "") {
+		req.files.coverfile.file = os.tmpdir() + "/express-busboy/" + req.files.coverfile.uuid + "/cover.png";
+		fs.createReadStream("./public/img/demoprofilepic.jpg").pipe(fs.createWriteStream(req.files.coverfile.file));
+	}
+
 	console.log(req.files);
-	if(req.files.songfile.filename == "" || req.files.coverfile.filename == "") {
+	if(req.files.songfile.filename == "") {
 		console.log("Missing files");
-		req.flash("error", "Audio or Cover Photo Missing")
+		req.flash("error", "Audio File Missing");
 		res.redirect("/song");
 		return;
 	}
 
-	if(req.body.SongTitle == "" || req.body.SongGenre == "" || req.body.SongDescription == "")
+	if(req.body.SongTitle == "")
 	{
-		if(req.body.SongTitle == "")
-			req.flash("error", "Song Title Required");
-		if(req.body.SongGenre == "")
-			req.flash("error", "Song Genre Required");
-		if(req.body.SongDescription == "")
-			req.flash("error", "Song Description Required");
+		req.flash("error", "Song Title Required");
 		res.redirect("/song");
 		return;
 	}
+
 
 	Song.create({
 		title: req.body.SongTitle,
