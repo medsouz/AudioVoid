@@ -12,6 +12,10 @@ router.get('/', function(req, res, next) {
 	}
 });
 
+router.get('/about', function(req, res, next) {
+	res.render('about', { req : req, title: 'About Us' });
+});
+
 function getFollowerContent(req, user, callback) {
 	user.getFollowed().then(function (follows, err) {
 		var followedIDs = [];
