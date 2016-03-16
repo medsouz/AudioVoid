@@ -23,6 +23,10 @@
 					<i class="material-icons">repeat</i>
 				</button>
 				<span><%= song.numReposts %></span>
+				<div class="mdl-tooltip mdl-tooltip--large" for="btnDownloadSong<%= song.id %>">Download Song</div>
+				<a id="btnDownloadSong<%= song.id %>" class="mdl-button mdl-js-button mdl-button--icon" href="/song/<%= song.id %>/song" download="<%= song.title %>.mp3">
+					<i class="material-icons">file_download</i>
+				</a>
 			</div>
 		</div>
 	</div>
