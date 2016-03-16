@@ -39,3 +39,17 @@ function unrepostSong(songID) {
 			ajaxPageReload();
 	});
 }
+
+function uploadSong() {
+	if ($("#songFile")[0].files[0] == undefined)
+	{
+		alert("No Song File/Song File Not Recognized");
+		return;
+	}
+	if ($("#SongTitleID").val() == "")
+	{
+		alert("Song Title Required");
+		return;
+	}
+	$("#UploadForm").submit();
+}

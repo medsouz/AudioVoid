@@ -1,5 +1,5 @@
 <% layout('layout') -%>
-<form action="/song/upload" method="post" enctype="multipart/form-data">
+<form action="/song/upload" method="post" enctype="multipart/form-data" id="UploadForm">
 
 	<div class="mdl-grid">
 		<%
@@ -18,7 +18,7 @@
 			<div class="mdl-cell mdl-cell--4-col center">
 				<i class="material-icons center" style="font-size: 1000%;">album</i>
 			</div>
-			<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-600" type="file" name="songfile" value="upload" accept="audio/mp3"></input>
+			<input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-600" id="songFile" type="file" name="songfile" value="upload" accept="audio/mp3"></input>
 		</div>
 		<div class="mdl-cell mdl-cell--4-col mdl-color--white mdl-color-text--black login-header" style="margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto; padding-top: 2px;">
 			<b>Upload song image</b>
@@ -33,7 +33,7 @@
 			<div class="mdl-cell mdl-cell--4-col">
 
 				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-bottom: 0px;">
-					<input class="mdl-textfield__input" type="text" name="SongTitle">
+					<input class="mdl-textfield__input" type="text" name="SongTitle" id="SongTitleID">
 					<label class="mdl-textfield__label" for="SongTitle">
 						<b>Title</b>
 					</label>
@@ -58,7 +58,7 @@
 								<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--grey-600" type="Cancel" value="Cancel">Cancel</button>
 							</td>
 							<td>
-								<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-600" type="Submit" value="Submit">Submit</button>
+								<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-600" type="button" onclick="uploadSong()" id="SubmitForm">Submit</button>
 							</td>
 						</tr>
 					</table>
