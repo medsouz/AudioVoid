@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session')
 var passport = require('passport');
 var flash = require('connect-flash');
+var Promise = require('bluebird');
 
 // Global libraries
 // These are functions that are used in many places
@@ -50,7 +51,7 @@ GLOBAL.Follow = sequelize.define("Follow");
 User.hasMany(Follow, { as: "Followed" });
 User.hasMany(Follow, { as: "Followers", foreignKey : 'followedId' });
 
-GLOBAL.getUserContent = function (userList, callback) {
+GLOBAL.getUserContent = function (req, userList, callback) {
 	Repost.findAll({ where: { UserId: { $in: userList } }}).then(function(reposts){
 		var repostedPosts = [];
 		var repostedSongs = [];
@@ -63,11 +64,29 @@ GLOBAL.getUserContent = function (userList, callback) {
 			else
 				console.log("Invalid repost type: " + reposts[r].type);
 		}
+		var currentUserID = -1;
+		if(req.user)
+			currentUserID = req.user.id;
 		Post.findAll({
 			where: {
 				$or: [{ UserId: { $in: userList } }, {id: { $in: repostedPosts }}]
 			},
 			order: [['createdAt', 'DESC']]
+		}).then(function(posts){
+			var promises = [];
+			posts.forEach(function(p) {
+				promises.push(
+					Promise.all([
+						Repost.count({ where: { type: 0, PostId: p.id } }),
+						Repost.count({ where: { type: 0, UserId: currentUserID, PostId: p.id } })
+					]).spread(function(reposts, userReposts) {
+						p.numReposts = reposts;
+						p.reposted = (userReposts > 0);
+						return p;
+					})
+				)
+			});
+			return Promise.all(promises);
 		}).then(function(posts){
 			for(var p in posts) {
 				if(userIDs.indexOf(posts[p].UserId) == -1)
@@ -78,6 +97,21 @@ GLOBAL.getUserContent = function (userList, callback) {
 					$or: [{ UserId: { $in: userList } }, {id: { $in: repostedSongs }}]
 				},
 				order: [['createdAt', 'DESC']]
+			}).then(function(songs){
+				var promises = [];
+				songs.forEach(function(s) {
+					promises.push(
+						Promise.all([
+							Repost.count({ where: { type: 1, SongId: s.id } }),
+							Repost.count({ where: { type: 1, UserId: currentUserID, SongId: s.id } })
+						]).spread(function(reposts, userReposts) {
+							s.numReposts = reposts;
+							s.reposted = (userReposts > 0);
+							return s;
+						})
+					)
+				});
+				return Promise.all(promises);
 			}).then(function(songs){
 				for(var s in songs) {
 					if(userIDs.indexOf(songs[s].UserId) == -1)

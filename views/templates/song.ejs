@@ -18,17 +18,11 @@
 			<span><%= song.description %></span>
 			<div class="mdl-card--expand"></div>
 			<div>
-				<div class="mdl-tooltip mdl-tooltip--large" for="btnLikeSong<%= song.id %>">Like</div>
-				<button id="btnLikeSong<%= song.id %>" class="mdl-button mdl-js-button mdl-button--icon">
-					<i class="material-icons">favorite</i>
-				</button>
-				<span>100</span>
-
-				<div class="mdl-tooltip mdl-tooltip--large" for="btnRepostSong<%= song.id %>" onclick="repostSong(<%= song.id %>);">Repost</div>
-				<button id="btnRepostSong<%= song.id %>" class="mdl-button mdl-js-button mdl-button--icon">
+				<div class="mdl-tooltip mdl-tooltip--large" for="btnRepostSong<%= song.id %>"><%= (song.reposted) ? "Unrepost" : "Repost" %></div>
+				<button id="btnRepostSong<%= song.id %>" class="mdl-button mdl-js-button mdl-button--icon <% if(song.reposted) { %>mdl-button--colored<% } %>" onclick="<% if(song.reposted) { %>unrepostSong(<%= song.id %>);<% } else { %>repostSong(<%= song.id %>);<% } %>">
 					<i class="material-icons">repeat</i>
 				</button>
-				<span>100</span>
+				<span><%= song.numReposts %></span>
 			</div>
 		</div>
 	</div>

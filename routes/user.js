@@ -15,7 +15,7 @@ router.get('/:username', function(req, res, next) {
 	var username = req.params.username;
 	// If the user is viewing their own profile then save us a SQL request
 	if(req.user && username == req.user.username) {
-		getUserContent([req.user.id], function(posts, songs, users) {
+		getUserContent(req, [req.user.id], function(posts, songs, users) {
 			res.render('user', { req : req, user: req.user, title: req.user.username + "'s Profile", posts: posts, songs: songs, following: false, users: users });
 		});
 	} else {
@@ -32,12 +32,12 @@ router.get('/:username', function(req, res, next) {
 							followedId: user.id
 						}
 					}).then(function(follow, err) {
-						getUserContent([user.id], function(posts, songs, users) {
+						getUserContent(req, [user.id], function(posts, songs, users) {
 							res.render('user', { req : req, user: user, title: user.username + "'s Profile", posts: posts, songs: songs, following: (follow != null), users: users });
 						});
 					});
 				} else {
-					getUserContent([user.id], function(posts, songs, users) {
+					getUserContent(req, [user.id], function(posts, songs, users) {
 						res.render('user', { req : req, user: user, title: user.username + "'s Profile", posts: posts, songs: songs, following: false, users: users });
 					});
 				}
@@ -146,6 +146,42 @@ router.post('/repost', function(req, res, next) {
 				} else {
 					res.send(false);
 				}
+			});
+		} else {
+			res.send(false);
+		}
+	} else {
+		res.send(false);
+	}
+});
+
+router.post('/unrepost', function(req, res, next) {
+	if(req.user) {
+		if(req.body.type == 0) {
+			Repost.findAll({
+				where: {
+					UserId: req.user.id,
+					type: 0,
+					PostId: req.body.id
+				}
+			}).then(function(reposts, err) {
+				reposts.forEach(function(r) {
+					r.destroy();
+				});
+				res.send(true);
+			});
+		} else if(req.body.type == 1) {
+			Repost.findAll({
+				where: {
+					UserId: req.user.id,
+					type: 1,
+					SongId: req.body.id
+				}
+			}).then(function(reposts, err) {
+				reposts.forEach(function(r) {
+					r.destroy();
+				});
+				res.send(true);
 			});
 		} else {
 			res.send(false);

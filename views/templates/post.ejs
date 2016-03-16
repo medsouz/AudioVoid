@@ -8,16 +8,11 @@
 			<div><%= post.message %></div>
 			<div class="mdl-card--expand"></div>
 			<div>
-				<div class="mdl-tooltip mdl-tooltip--large" for="btnLikePost<%= post.id %>">Like</div>
-				<button id="btnLikePost<%= post.id %>" class="mdl-button mdl-js-button mdl-button--icon">
-					<i class="material-icons">favorite</i>
-				</button>
-				<span>100</span>
-				<div class="mdl-tooltip mdl-tooltip--large" for="btnRepostPost<%= post.id %>" onclick="repostPost(<%= post.id %>);">Repost</div>
-				<button id="btnRepostPost<%= post.id %>" class="mdl-button mdl-js-button mdl-button--icon">
+				<div class="mdl-tooltip mdl-tooltip--large" for="btnRepostPost<%= post.id %>"><%= (post.reposted) ? "Unrepost" : "Repost" %></div>
+				<button id="btnRepostPost<%= post.id %>" class="mdl-button mdl-js-button mdl-button--icon <% if(post.reposted) { %>mdl-button--colored<% } %>" onclick="<% if(post.reposted) { %>unrepostPost(<%= post.id %>);<% } else { %>repostPost(<%= post.id %>);<% } %>">
 					<i class="material-icons">repeat</i>
 				</button>
-				<span>100</span>
+				<span><%= post.numReposts %></span>
 			</div>
 		</div>
 	</div>

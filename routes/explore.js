@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Promise = require('bluebird')
+var Promise = require('bluebird');
 
 router.get('/', function(req, res, next) {
 	User.findAll().then(function(users){
