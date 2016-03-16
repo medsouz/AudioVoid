@@ -49,17 +49,29 @@
 		<% } %>
 	</div>
 	<div class="mdl-cell mdl-cell--6-col">
-		<% for(var s in songs) { %>
-			<% if(songs[s].UserId == user.id) { %>
-				<%- partial("templates/song", { song: songs[s] }) %>
-			<% } else { %>
-				<%- partial("templates/repost", {view: "song", options: {song: songs[s]},  user: users[songs[s].UserId]}) %>
+		<% if(songs.length == 0 ) { %>
+			<div class="mdl-cell mdl-cell--12-col mdl-color--white mdl-color-text--black-100 mdl-shadow--2dp">
+				<h1 class="center">No Songs!</h1>
+			</div>
+		<% } else { %>
+			<% for(var s in songs) { %>
+				<% if(songs[s].UserId == user.id) { %>
+					<%- partial("templates/song", { song: songs[s] }) %>
+				<% } else { %>
+					<%- partial("templates/repost", {view: "song", options: {song: songs[s]},  user: users[songs[s].UserId]}) %>
+				<% } %>
 			<% } %>
 		<% } %>
 	</div>
 	<div class="mdl-cell mdl-cell--6-col">
-		<% for(var p in posts) { %>
-			<%- partial("templates/post", {user: users[posts[p].UserId], post: posts[p] }) %>
+		<% if(posts.length == 0 ) { %>
+			<div class="mdl-cell mdl-cell--12-col mdl-color--white mdl-color-text--black-100 mdl-shadow--2dp">
+				<h1 class="center">No Posts!</h1>
+			</div>
+		<% } else { %>
+			<% for(var p in posts) { %>
+				<%- partial("templates/post", {user: users[posts[p].UserId], post: posts[p] }) %>
+			<% } %>
 		<% } %>
 	</div>
 </div>

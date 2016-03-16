@@ -1,13 +1,27 @@
 <% layout('layout') -%>
 <div class="mdl-grid">
 	<div class="mdl-cell mdl-cell--6-col">
-		<% for(var s in songs) { %>
-			<%- partial("templates/repost", {view: "song", options: { song: songs[s]},  user: users[songs[s].UserId]}) %>
+		<% if(songs.length == 0) { %>
+			<div class="mdl-cell mdl-cell--12-col mdl-color--white mdl-color-text--black-100 mdl-shadow--2dp">
+				<h1 class="center">No Songs!</h1>
+				<h3 class="center">Follow some artists!</h3>
+			</div>
+		<% } else { %>
+			<% for(var s in songs) { %>
+				<%- partial("templates/repost", {view: "song", options: { song: songs[s]},  user: users[songs[s].UserId]}) %>
+			<% } %>
 		<% } %>
 	</div>
 	<div class="mdl-cell mdl-cell--6-col">
-		<% for(var p in posts) { %>
-			<%- partial("templates/post", {post: posts[p], user: users[posts[p].UserId]}) %>
+		<% if(posts.length == 0) { %>
+			<div class="mdl-cell mdl-cell--12-col mdl-color--white mdl-color-text--black-100 mdl-shadow--2dp">
+				<h1 class="center">No Posts!</h1>
+				<h3 class="center">Follow some artists!</h3>
+			</div>
+		<% } else { %>
+			<% for(var p in posts) { %>
+				<%- partial("templates/post", {post: posts[p], user: users[posts[p].UserId]}) %>
+			<% } %>
 		<% } %>
 	</div>
 </div>
